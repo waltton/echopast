@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"database/sql"
 	"log"
 	"os"
 	"path"
@@ -9,6 +9,16 @@ import (
 
 func main() {
 	dataPath := "../data"
+
+	db, err := sql.Open("host=localhost database=logs username=postgres", "postgers")
+	if err != nil {
+		log.Panic(err)
+	}
+
+	err = db.Ping()
+	if err != nil {
+		log.Panic(err)
+	}
 
 	files, err := os.ReadDir(dataPath)
 	if err != nil {
@@ -26,7 +36,8 @@ func main() {
 		logs = append(logs, l...)
 	}
 
-	for _, l := range logs {
-		fmt.Println(l.Request)
+	err = writeLogs(db, logs)
+	if err != nil {
+		log.Panic(err)
 	}
 }
