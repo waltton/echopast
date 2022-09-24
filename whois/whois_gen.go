@@ -61,3 +61,56 @@ func parseWhoisGEN(raw string) (w WhoisGEN, err error) {
 
 	return
 }
+
+const (
+	RegistryIANA    = "iana"
+	RegistryARIN    = "arin"
+	RegistryAPNIC   = "apnic"
+	RegistryLACNIC  = "lacnic"
+	RegistryAFRINIC = "afrinic"
+	RegistryRIPE    = "ripe"
+)
+
+func (w WhoisGEN) Registry() string {
+	if len(w) < 1 {
+		return ""
+	}
+
+	val, ok := w[0]["%"]
+	if ok {
+		if len(val) > 0 {
+			if val[0] == "IANA WHOIS server" {
+				return RegistryIANA
+			}
+			if val[0] == "This is the AfriNIC Whois server." {
+				return RegistryAFRINIC
+			}
+			if val[0] == "Joint Whois - whois.lacnic.net" {
+				return RegistryLACNIC
+			}
+			if val[0] == "Whois data copyright terms    http://www.apnic.net/db/dbcopyright.html" {
+				return RegistryAPNIC
+			}
+		}
+	}
+
+	val, ok = w[0]["#"]
+	if ok {
+		if len(val) > 1 {
+			if val[1] == "ARIN WHOIS data and services are subject to the Terms of Use" {
+				return RegistryARIN
+			}
+		}
+	}
+
+	val, ok = w[0]["source"]
+	if ok {
+		if len(val) > 0 {
+			if val[0] == "RIPE" {
+				return RegistryRIPE
+			}
+		}
+	}
+
+	return ""
+}

@@ -12,13 +12,33 @@ import (
 
 func TestParseWhoisGEN(t *testing.T) {
 	testCases := []struct {
-		name string
+		name     string
+		registry string
 	}{
-		{name: "13.13.13.13-arin"},
-		{name: "1.1.1.1-apnic"},
-		{name: "186.186.186.186-lacnic"},
-		{name: "102.0.0.0-afrinic"},
-		{name: "104.167.16.0-ripe"},
+		{
+			name:     "1.1.1.1-iana",
+			registry: RegistryIANA,
+		},
+		{
+			name:     "13.13.13.13-arin",
+			registry: RegistryARIN,
+		},
+		{
+			name:     "1.1.1.1-apnic",
+			registry: RegistryAPNIC,
+		},
+		{
+			name:     "186.186.186.186-lacnic",
+			registry: RegistryLACNIC,
+		},
+		{
+			name:     "102.0.0.0-afrinic",
+			registry: RegistryAFRINIC,
+		},
+		{
+			name:     "104.167.16.0-ripe",
+			registry: RegistryRIPE,
+		},
 	}
 
 	for _, tc := range testCases {
@@ -46,6 +66,10 @@ func TestParseWhoisGEN(t *testing.T) {
 				require.True(t, ok, "no value found for objc: %d, key: %s, object: %+v", objc, k, result[objc])
 				assert.Equal(t, ew[objc][k], val)
 			}
+		}
+
+		if tc.registry != "" {
+			assert.Equal(t, tc.registry, result.Registry())
 		}
 	}
 }
