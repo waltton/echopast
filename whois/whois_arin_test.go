@@ -31,5 +31,12 @@ func TestParseWhoisARIN(t *testing.T) {
 		require.NoError(t, err)
 
 		assert.Equal(t, len(ew), len(result))
+		for objc := range ew {
+			for k := range ew[objc] {
+				val, ok := result[objc][k]
+				require.True(t, ok, "no value found for objc: %d, key: %s, object: %+v", objc, k, result[objc])
+				assert.Equal(t, ew[objc][k], val)
+			}
+		}
 	}
 }

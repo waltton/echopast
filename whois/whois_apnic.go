@@ -34,8 +34,10 @@ func parseWhoisAPNIC(raw string) (w WhoisAPNIC, err error) {
 		line = strings.TrimSpace(line)
 
 		if line == "" {
-			objc++
-			w = append(w, make(map[string][]string))
+			if len(w[objc]) > 0 {
+				objc++
+				w = append(w, make(map[string][]string))
+			}
 
 			continue
 		}

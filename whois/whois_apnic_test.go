@@ -37,11 +37,6 @@ func TestParseWhoisAPNIC(t *testing.T) {
 				require.True(t, ok, "no value found for objc: %d, key: %s, object: %+v", objc, k, result[objc])
 				assert.Equal(t, ew[objc][k], val)
 			}
-			// for k := range result[i] {
-			// 	fmt.Println("rk", k)
-			// 	// assert.Equal(t, ew[i][k], result[i][k])
-			// }
-			// fmt.Println("---")
 		}
 	}
 }

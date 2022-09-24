@@ -10,8 +10,6 @@ import (
 type WhoisARIN []map[string][]string
 
 func parseWhoisARIN(raw string) (w WhoisARIN, err error) {
-	w = make(WhoisARIN, 0, 11)
-
 	var i int
 	var objc int
 	var prevk string
@@ -34,8 +32,10 @@ func parseWhoisARIN(raw string) (w WhoisARIN, err error) {
 		line = strings.TrimSpace(line)
 
 		if line == "" {
-			objc++
-			w = append(w, make(map[string][]string))
+			if len(w[objc]) > 0 {
+				objc++
+				w = append(w, make(map[string][]string))
+			}
 
 			continue
 		}
