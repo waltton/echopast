@@ -4,12 +4,24 @@ import (
 	"bufio"
 	"io"
 	"log"
+	"regexp"
 	"strings"
 )
 
-type WhoisGEN []map[string][]string
+type Whois []map[string][]string
 
-func parseWhoisGEN(raw string) (w WhoisGEN, err error) {
+var reKV = regexp.MustCompile(`([\w-]*):\s*(.*)`)
+
+func isZeroString(value string) bool {
+	bs := []byte(value)
+	var total int64
+	for _, b := range bs {
+		total += int64(b)
+	}
+	return total == 0
+}
+
+func parseWhois(raw string) (w Whois, err error) {
 	var i int
 	var objc int
 	var prevk string
@@ -71,7 +83,7 @@ const (
 	RegistryRIPE    = "ripe"
 )
 
-func (w WhoisGEN) Registry() string {
+func (w Whois) Registry() string {
 	if len(w) < 1 {
 		return ""
 	}
@@ -112,5 +124,20 @@ func (w WhoisGEN) Registry() string {
 		}
 	}
 
+	return ""
+}
+
+func (w Whois) Refer() string {
+	switch w.Registry() {
+	case RegistryIANA:
+		if len(w) > 1 {
+			val, ok := w[0]["refer"]
+			if ok {
+				if len(val) == 1 {
+					return val[0]
+				}
+			}
+		}
+	}
 	return ""
 }

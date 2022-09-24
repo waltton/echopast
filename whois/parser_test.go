@@ -10,7 +10,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestParseWhoisGEN(t *testing.T) {
+func TestParseWhois(t *testing.T) {
 	testCases := []struct {
 		name     string
 		registry string
@@ -48,11 +48,11 @@ func TestParseWhoisGEN(t *testing.T) {
 		f, err := os.Open("./data/" + tc.name + ".json")
 		require.NoError(t, err)
 
-		ew := WhoisGEN{}
+		ew := Whois{}
 		err = json.NewDecoder(f).Decode(&ew)
 		require.NoError(t, err)
 
-		result, err := parseWhoisGEN(string(raw))
+		result, err := parseWhois(string(raw))
 		require.NoError(t, err)
 
 		if len(ew) != len(result) {

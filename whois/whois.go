@@ -14,16 +14,16 @@ func Lookup(param string) (result string, err error) {
 		return "", err
 	}
 
-	whois, err := parseWhoisIANA(result)
+	whois, err := parseWhois(result)
 	if err != nil {
 		return "", err
 	}
 
-	if whois.Refer == "" {
+	if whois.Refer() == "" {
 		return
 	}
 
-	result, err = rawQuery(whois.Refer, param)
+	result, err = rawQuery(whois.Refer(), param)
 	if err != nil {
 		return "", err
 	}
