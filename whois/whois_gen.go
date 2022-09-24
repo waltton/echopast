@@ -45,24 +45,6 @@ func parseWhoisGEN(raw string) (w WhoisGEN, err error) {
 			continue
 		}
 
-		if strings.HasPrefix(line, "#") {
-			if len(line) > 2 {
-				w[objc]["#"] = append(w[objc]["#"], line[2:])
-			} else {
-				w[objc]["#"] = append(w[objc]["#"], "")
-			}
-			continue
-		}
-
-		if strings.HasPrefix(line, "%") {
-			if len(line) > 2 {
-				w[objc]["%"] = append(w[objc]["%"], line[2:])
-			} else {
-				w[objc]["%"] = append(w[objc]["%"], "")
-			}
-			continue
-		}
-
 		m := reKV.FindStringSubmatch(line)
 		if len(m) == 3 {
 			w[objc][m[1]] = append(w[objc][m[1]], m[2])
