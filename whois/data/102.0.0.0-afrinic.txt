@@ -1,0 +1,70 @@
+% This is the AfriNIC Whois server.
+% The AFRINIC whois database is subject to  the following terms of Use. See https://afrinic.net/whois/terms
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '102.0.0.0 - 102.7.255.255'
+
+% No abuse contact registered for 102.0.0.0 - 102.7.255.255
+
+inetnum:        102.0.0.0 - 102.7.255.255
+netname:        Airtel-Kenya
+descr:          Airtel Networks Kenya Limited
+country:        KE
+org:            ORG-CKL1-AFRINIC
+admin-c:        JK36-AFRINIC
+admin-c:        AM125-AFRINIC
+tech-c:         JK36-AFRINIC
+tech-c:         AM125-AFRINIC
+status:         ALLOCATED PA
+mnt-by:         AFRINIC-HM-MNT
+mnt-lower:      AIRTEL-KE
+mnt-domains:    AIRTEL-KE
+source:         AFRINIC # Filtered
+parent:         102.0.0.0 - 102.255.255.255
+
+organisation:   ORG-CKL1-AFRINIC
+org-name:       Airtel Networks Kenya Limited
+org-type:       LIR
+country:        KE
+address:        Parkside Towers, Mombasa Road
+address:        P.O. Box 73146, 00200
+address:        City Sqare
+address:        Nairobi
+phone:          tel:+254-742-111098
+phone:          tel:+254-734-111100
+phone:          tel:+254-734-110000
+admin-c:        JK36-AFRINIC
+admin-c:        AM125-AFRINIC
+tech-c:         JK36-AFRINIC
+tech-c:         AM125-AFRINIC
+mnt-ref:        AFRINIC-HM-MNT
+mnt-ref:        AIRTEL-KE
+mnt-by:         AFRINIC-HM-MNT
+source:         AFRINIC # Filtered
+
+person:         Albert Mungai
+address:        Parkside Towers, Mombasa Road
+address:        Mombasa Road
+address:        Nairobi Kenya
+phone:          tel:+254-733-678477
+phone:          tel:+254-73317349
+nic-hdl:        AM125-AFRINIC
+mnt-by:         GENERATED-TWSEHXIROAVZW6TGQEXQQBAOWG67HRLQ-MNT
+source:         AFRINIC # Filtered
+
+person:         John Kiama
+address:        Airtel Networks Kenya Limited
+phone:          tel:+254-733-333313
+nic-hdl:        JK36-AFRINIC
+mnt-by:         GENERATED-M5XUAZN3PGEU96XFQGSMU04J3RR8EVGQ-MNT
+source:         AFRINIC # Filtered
+
+% Information related to '102.0.0.0/17AS36926'
+
+route:          102.0.0.0/17
+descr:          Airtel KE Mobile & Fixed Internet
+origin:         AS36926
+mnt-by:         AIRTEL-KE
+source:         AFRINIC # Filtered

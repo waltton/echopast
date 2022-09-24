@@ -1,0 +1,58 @@
+[
+    {
+        "inetnum": ["104.167.16.0 - 104.167.31.255"],
+        "netname": ["CN-JIUNETWORK-20140822"],
+        "country": ["DE"],
+        "org": ["ORG-XJNC1-RIPE"],
+        "admin-c": ["NA7316-RIPE"],
+        "tech-c": ["NA7316-RIPE"],
+        "status": ["ALLOCATED PA"],
+        "mnt-by": [
+            "lir-cn-jiunetwork-1-MNT",
+            "RIPE-NCC-HM-MNT"
+        ],
+        "created": ["2021-11-09T13:31:09Z"],
+        "last-modified": ["2021-11-10T00:04:14Z"],
+        "source": ["RIPE"]
+    },
+    {
+        "organisation": ["ORG-XJNC1-RIPE"],
+        "org-name": ["Xiamen Jiufu Network Co., Ltd."],
+        "country": ["CN"],
+        "org-type": ["LIR"],
+        "address": [
+            "Vanke Plaza 3#607",
+            "361199",
+            "XiaMen,FuJian",
+            "CHINA"],
+        "phone": ["+8613225081737"],
+        "admin-c": ["NA7316-RIPE"],
+        "tech-c": ["NA7316-RIPE"],
+        "abuse-c": ["AR65392-RIPE"],
+        "mnt-ref": ["lir-cn-jiunetwork-1-MNT"],
+        "mnt-by": [
+            "RIPE-NCC-HM-MNT",
+            "lir-cn-jiunetwork-1-MNT"
+        ],
+        "created": ["2021-10-01T10:08:42Z"],
+        "last-modified": ["2022-03-19T00:38:12Z"],
+        "source": ["RIPE # Filtered"]
+    },
+    {
+        "role": ["Noc"],
+        "address": [
+            "CHINA",
+            "XiaMen,FuJian",
+            "361199",
+            "wan ke guang chang 3 # 607"
+        ],
+        "nic-hdl": ["NA7316-RIPE"],
+        "mnt-by": ["lir-cn-jiunetwork-1-MNT"],
+        "created": ["2021-10-01T10:08:41Z"],
+        "last-modified": ["2022-03-18T17:22:37Z"],
+        "source": ["RIPE # Filtered"]
+    },
+    {
+        "%": ["This query was served by the RIPE Database Query Service version 1.103 (HEREFORD)"]
+    }
+]

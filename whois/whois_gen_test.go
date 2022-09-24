@@ -2,6 +2,7 @@ package whois
 
 import (
 	"encoding/json"
+	"fmt"
 	"os"
 	"testing"
 
@@ -16,6 +17,8 @@ func TestParseWhoisGEN(t *testing.T) {
 		{name: "13.13.13.13-arin"},
 		{name: "1.1.1.1-apnic"},
 		{name: "186.186.186.186-lacnic"},
+		{name: "102.0.0.0-afrinic"},
+		{name: "104.167.16.0-ripe"},
 	}
 
 	for _, tc := range testCases {
@@ -31,6 +34,10 @@ func TestParseWhoisGEN(t *testing.T) {
 
 		result, err := parseWhoisGEN(string(raw))
 		require.NoError(t, err)
+
+		if len(ew) != len(result) {
+			fmt.Printf("result: %+v\n", result)
+		}
 
 		assert.Equal(t, len(ew), len(result))
 		for objc := range ew {
