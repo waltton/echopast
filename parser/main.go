@@ -2,15 +2,21 @@ package main
 
 import (
 	"database/sql"
+	"embed"
 	"log"
 	"os"
 	"path"
+
+	_ "github.com/lib/pq"
 )
+
+//go:embed migrations/*.sql
+var embedMigrations embed.FS
 
 func main() {
 	dataPath := "../data"
 
-	db, err := sql.Open("host=localhost database=logs username=postgres", "postgers")
+	db, err := sql.Open("postgres", "host=localhost database=logs user=postgres sslmode=disable")
 	if err != nil {
 		log.Panic(err)
 	}

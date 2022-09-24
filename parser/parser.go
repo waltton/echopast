@@ -3,6 +3,8 @@ package main
 import (
 	"bufio"
 	"bytes"
+	"crypto/sha1"
+	"encoding/hex"
 	"encoding/json"
 	"io"
 	"log"
@@ -18,6 +20,7 @@ import (
 type Log struct {
 	RawRequest string `json:"request"`
 	Timestamp  string `json:"timestamp"`
+	Hash       string
 	Request    Request
 }
 
@@ -61,7 +64,11 @@ func parseFile(name string) (logs []Log, err error) {
 			log.Panic(err)
 		}
 
-		logline.Request = parseRequest(logline)
+		h := sha1.New()
+		h.Write([]byte(logline.RawRequest))
+
+		logline.Hash = hex.EncodeToString(h.Sum(nil))
+		logline.Request = parseRequest(logline.RawRequest)
 
 		logs = append(logs, logline)
 	}
@@ -71,8 +78,8 @@ func parseFile(name string) (logs []Log, err error) {
 
 var reForwarded = regexp.MustCompile(`for="(.*)";proto=(.*),`)
 
-func parseRequest(l Log) Request {
-	b := bytes.NewBufferString(l.RawRequest)
+func parseRequest(request string) Request {
+	b := bytes.NewBufferString(request)
 	req, err := http.ReadRequest(bufio.NewReader(b))
 	if err != nil {
 		log.Panic(err)
