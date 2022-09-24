@@ -9,11 +9,13 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestParseWhoisAPNIC(t *testing.T) {
+func TestParseWhoisGEN(t *testing.T) {
 	testCases := []struct {
 		name string
 	}{
+		{name: "13.13.13.13-arin"},
 		{name: "1.1.1.1-apnic"},
+		{name: "186.186.186.186-lacnic"},
 	}
 
 	for _, tc := range testCases {
@@ -23,11 +25,11 @@ func TestParseWhoisAPNIC(t *testing.T) {
 		f, err := os.Open("./data/" + tc.name + ".json")
 		require.NoError(t, err)
 
-		ew := WhoisAPNIC{}
+		ew := WhoisGEN{}
 		err = json.NewDecoder(f).Decode(&ew)
 		require.NoError(t, err)
 
-		result, err := parseWhoisAPNIC(string(raw))
+		result, err := parseWhoisGEN(string(raw))
 		require.NoError(t, err)
 
 		assert.Equal(t, len(ew), len(result))

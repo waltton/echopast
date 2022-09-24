@@ -7,9 +7,9 @@ import (
 	"strings"
 )
 
-type WhoisARIN []map[string][]string
+type WhoisGEN []map[string][]string
 
-func parseWhoisARIN(raw string) (w WhoisARIN, err error) {
+func parseWhoisGEN(raw string) (w WhoisGEN, err error) {
 	var i int
 	var objc int
 	var prevk string
@@ -40,15 +40,29 @@ func parseWhoisARIN(raw string) (w WhoisARIN, err error) {
 			continue
 		}
 
+		if line[0] == '#' || line[0] == '%' {
+			w[objc][string(line[0])] = append(w[objc][string(line[0])], strings.Trim(line, " #%"))
+			continue
+		}
+
 		if strings.HasPrefix(line, "#") {
 			if len(line) > 2 {
 				w[objc]["#"] = append(w[objc]["#"], line[2:])
 			} else {
 				w[objc]["#"] = append(w[objc]["#"], "")
 			}
-
 			continue
 		}
+
+		if strings.HasPrefix(line, "%") {
+			if len(line) > 2 {
+				w[objc]["%"] = append(w[objc]["%"], line[2:])
+			} else {
+				w[objc]["%"] = append(w[objc]["%"], "")
+			}
+			continue
+		}
+
 		m := reKV.FindStringSubmatch(line)
 		if len(m) == 3 {
 			w[objc][m[1]] = append(w[objc][m[1]], m[2])

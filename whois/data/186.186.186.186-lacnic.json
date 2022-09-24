@@ -1,0 +1,65 @@
+[
+    {
+        "%": [
+            "Joint Whois - whois.lacnic.net",
+            "This server accepts single ASN, IPv4 or IPv6 queries"
+        ]
+    },
+    {
+        "%": ["LACNIC resource: whois.lacnic.net"]
+    },
+    {
+        "%": [
+            "Copyright LACNIC lacnic.net",
+            "The data below is provided for information purposes",
+            "and to assist persons in obtaining information about or",
+            "related to AS and IP numbers registrations",
+            "By submitting a whois query, you agree to use this data",
+            "only for lawful purposes.",
+            "2022-09-24 12:52:12 (-03 -03:00)"
+        ]
+    },
+    {
+        "inetnum": ["186.186.0.0/15"],
+        "status": ["allocated"],
+        "aut-num": ["AS6306"],
+        "owner": ["TELEFONICA VENEZOLANA, C.A."],
+        "ownerid": ["VE-TCCA-LACNIC"],
+        "responsible": ["Alvaro Espinosa"],
+        "address": [
+            "Av. Francisco de Miranda, CC El Parque Piso 15, --, Los Palos Grandes Edf. de Telefónica",
+            "1070 - Caracas - DF"
+        ],
+        "country": ["VE"],
+        "phone": ["+58  2122008943 [28943]"],
+        "owner-c": ["ALE2"],
+        "tech-c": ["ALE2"],
+        "abuse-c": ["ALE2"],
+        "inetrev": ["186.186.0.0/16", "186.187.0.0/16"],
+        "nserver": ["DNS1.TELCEL.NET.VE", "DNS2.TELCEL.NET.VE", "DNS1.TELCEL.NET.VE", "DNS2.TELCEL.NET.VE"],
+        "nsstat": ["20220923 AA", "20220923 AA", "20220920 AA", "20220920 AA"],
+        "nslastaa": ["20220923","20220923","20220920","20220920"],
+        "created": ["20110125"],
+        "changed": ["20110125"]
+    },
+    {
+        "nic-hdl": ["ALE2"],
+        "person": ["Alvaro Espinosa"],
+        "e-mail": ["iptm.ve@telefonica.com"],
+        "address": [
+            "Av. Francisco de Miranda, Torre Canaima, Piso 15, 1060, -",
+            "1060 - Caracas - DF"
+        ],
+        "country": ["VE"],
+        "phone": ["+58  2122008943 [28943]"],
+        "created": ["20030626"],
+        "changed": ["20220203"]
+    },
+    {
+        "%": [
+            "whois.lacnic.net accepts only direct match queries.",
+            "Types of queries are: POCs, ownerid, CIDR blocks, IP",
+            "and AS numbers."
+        ]
+    }
+]

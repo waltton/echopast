@@ -9,7 +9,8 @@ import (
 )
 
 func TestLookup(t *testing.T) {
-	result, err := Lookup("13.13.13.13")
+	// result, err := Lookup("131.131.131.131")
+	result, err := Lookup("186.186.186.186")
 	require.NoError(t, err)
 
 	// w, err := parseWhoisIANA(result)

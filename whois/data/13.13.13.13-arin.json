@@ -16,7 +16,7 @@
         "#": [
             "",
             "Query terms are ambiguous.  The query is assumed to be:",
-            "    \"n 13.13.13.13\"",
+            "\"n 13.13.13.13\"",
             "",
             "Use \"?\" to get help.",
             ""
