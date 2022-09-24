@@ -18,7 +18,6 @@ func TestLookup(t *testing.T) {
 }
 
 func TestParse(t *testing.T) {
-
 	testCases := []struct {
 		name string
 	}{
@@ -40,5 +39,30 @@ func TestParse(t *testing.T) {
 		require.NoError(t, err)
 
 		assert.Equal(t, ew, result)
+	}
+}
+
+func TestIsZeroString(t *testing.T) {
+	testCases := []struct {
+		value   string
+		expects bool
+	}{
+		{
+			value:   "",
+			expects: true,
+		},
+		{
+			value:   "asd",
+			expects: false,
+		},
+		{
+			value:   string([]byte{0, 0, 0, 0}),
+			expects: true,
+		},
+	}
+
+	for _, tc := range testCases {
+		result := isZeroString(tc.value)
+		assert.Equal(t, tc.expects, result)
 	}
 }

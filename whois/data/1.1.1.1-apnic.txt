@@ -1,0 +1,95 @@
+% Whois data copyright terms    http://www.apnic.net/db/dbcopyright.html
+
+% Information related to '1.1.1.0 - 1.1.1.255'
+
+% Abuse contact for '1.1.1.0 - 1.1.1.255' is 'helpdesk@apnic.net'
+
+inetnum:        1.1.1.0 - 1.1.1.255
+netname:        APNIC-LABS
+descr:          APNIC and Cloudflare DNS Resolver project
+descr:          Routed globally by AS13335/Cloudflare
+descr:          Research prefix for APNIC Labs
+country:        AU
+org:            ORG-ARAD1-AP
+admin-c:        AR302-AP
+tech-c:         AR302-AP
+abuse-c:        AA1412-AP
+status:         ASSIGNED PORTABLE
+remarks:        ---------------
+remarks:        All Cloudflare abuse reporting can be done via
+remarks:        resolver-abuse@cloudflare.com
+remarks:        ---------------
+mnt-by:         APNIC-HM
+mnt-routes:     MAINT-AU-APNIC-GM85-AP
+mnt-irt:        IRT-APNICRANDNET-AU
+last-modified:  2020-07-15T13:10:57Z
+source:         APNIC
+
+irt:            IRT-APNICRANDNET-AU
+address:        PO Box 3646
+address:        South Brisbane, QLD 4101
+address:        Australia
+e-mail:         helpdesk@apnic.net
+abuse-mailbox:  helpdesk@apnic.net
+admin-c:        AR302-AP
+tech-c:         AR302-AP
+auth:           # Filtered
+remarks:        helpdesk@apnic.net was validated on 2021-02-09
+mnt-by:         MAINT-AU-APNIC-GM85-AP
+last-modified:  2021-03-09T01:10:21Z
+source:         APNIC
+
+organisation:   ORG-ARAD1-AP
+org-name:       APNIC Research and Development
+country:        AU
+address:        6 Cordelia St
+phone:          +61-7-38583100
+fax-no:         +61-7-38583199
+e-mail:         helpdesk@apnic.net
+mnt-ref:        APNIC-HM
+mnt-by:         APNIC-HM
+last-modified:  2017-10-11T01:28:39Z
+source:         APNIC
+
+role:           ABUSE APNICRANDNETAU
+address:        PO Box 3646
+address:        South Brisbane, QLD 4101
+address:        Australia
+country:        ZZ
+phone:          +000000000
+e-mail:         helpdesk@apnic.net
+admin-c:        AR302-AP
+tech-c:         AR302-AP
+nic-hdl:        AA1412-AP
+remarks:        Generated from irt object IRT-APNICRANDNET-AU
+abuse-mailbox:  helpdesk@apnic.net
+mnt-by:         APNIC-ABUSE
+last-modified:  2021-03-09T01:10:22Z
+source:         APNIC
+
+role:           APNIC RESEARCH
+address:        PO Box 3646
+address:        South Brisbane, QLD 4101
+address:        Australia
+country:        AU
+phone:          +61-7-3858-3188
+fax-no:         +61-7-3858-3199
+e-mail:         research@apnic.net
+nic-hdl:        AR302-AP
+tech-c:         AH256-AP
+admin-c:        AH256-AP
+mnt-by:         MAINT-APNIC-AP
+last-modified:  2018-04-04T04:26:04Z
+source:         APNIC
+
+% Information related to '1.1.1.0/24AS13335'
+
+route:          1.1.1.0/24
+origin:         AS13335
+descr:          APNIC Research and Development
+                6 Cordelia St
+mnt-by:         MAINT-AU-APNIC-GM85-AP
+last-modified:  2018-03-16T16:58:06Z
+source:         APNIC
+
+% This query was served by the APNIC Whois Service version 1.88.16 (WHOIS-UK4)

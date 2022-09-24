@@ -25,7 +25,7 @@ type Whois struct {
 }
 
 func Lookup(param string) (result string, err error) {
-	addr := "whois.iana.org:43"
+	addr := "whois.iana.org"
 	result, err = rawQuery(addr, param)
 	if err != nil {
 		return "", err
@@ -36,13 +36,16 @@ func Lookup(param string) (result string, err error) {
 		return "", err
 	}
 
-	_ = whois
+	result, err = rawQuery(whois.Refer, param)
+	if err != nil {
+		return "", err
+	}
 
 	return
 }
 
 func rawQuery(addr, param string) (result string, err error) {
-	conn, err := net.Dial("tcp", addr)
+	conn, err := net.Dial("tcp", addr+":43")
 	if err != nil {
 		return "", err
 	}
@@ -58,7 +61,9 @@ func rawQuery(addr, param string) (result string, err error) {
 		data := make([]byte, 4096)
 		_, err := conn.Read(data)
 		if err != nil {
-			if err == io.EOF || err.(net.Error).Timeout() {
+			if err == io.EOF {
+				break
+			} else if err.(net.Error).Timeout() {
 				log.Print(err)
 				break
 			} else {
@@ -78,20 +83,32 @@ func parseWhois(raw string) (w *Whois, err error) {
 	w = new(Whois)
 
 	var i int
-	scanner := bufio.NewScanner(strings.NewReader(raw))
-	for scanner.Scan() {
+	rd := bufio.NewReader(strings.NewReader(raw))
+	for {
 		i++
 
-		if scanner.Text() == "" {
+		line, err := rd.ReadString('\n')
+		if isZeroString(line) && err != nil {
+			if err == io.EOF {
+				break
+			}
+
+			log.Fatalf("read file line error: %v", err)
+			break
+		}
+
+		line = strings.TrimSpace(line)
+
+		if line == "" {
 			continue
 		}
 
-		if strings.HasPrefix(scanner.Text(), "%") {
-			w.Comments = append(w.Comments, scanner.Text())
+		if strings.HasPrefix(line, "%") {
+			w.Comments = append(w.Comments, line)
 			continue
 		}
 
-		m := reKV.FindStringSubmatch(scanner.Text())
+		m := reKV.FindStringSubmatch(line)
 		if len(m) == 3 {
 			switch m[1] {
 			case "refer":
@@ -112,14 +129,20 @@ func parseWhois(raw string) (w *Whois, err error) {
 			case "source":
 				w.Source = m[2]
 			}
-
 		} else {
-			log.Printf("fail to parse line:'%s'", scanner.Text())
+			log.Printf("fail to parse line: #%d '%+v'", i, line)
 		}
 
 	}
 
-	err = scanner.Err()
-
 	return
+}
+
+func isZeroString(value string) bool {
+	bs := []byte(value)
+	var total int64
+	for _, b := range bs {
+		total += int64(b)
+	}
+	return total == 0
 }
