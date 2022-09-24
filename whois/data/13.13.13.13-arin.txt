@@ -1,0 +1,65 @@
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2022, American Registry for Internet Numbers, Ltd.
+#
+
+
+#
+# Query terms are ambiguous.  The query is assumed to be:
+#     "n 13.13.13.13"
+#
+# Use "?" to get help.
+#
+
+NetRange:       13.0.0.0 - 13.23.255.255
+CIDR:           13.16.0.0/13, 13.0.0.0/12
+NetName:        XEROX-NET
+NetHandle:      NET-13-0-0-0-1
+Parent:         NET13 (NET-13-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:
+Organization:   Xerox Corporation (XEROX-16-Z)
+RegDate:        1986-04-25
+Updated:        2021-12-14
+Ref:            https://rdap.arin.net/registry/ip/13.0.0.0
+
+
+OrgName:        Xerox Corporation
+OrgId:          XEROX-16-Z
+Address:        201 Merritt 7
+City:           Norwalk
+StateProv:      CT
+PostalCode:     06851
+Country:        US
+RegDate:        2008-02-28
+Updated:        2021-09-07
+Ref:            https://rdap.arin.net/registry/entity/XEROX-16-Z
+
+
+OrgAbuseHandle: NNA19-ARIN
+OrgAbuseName:   Network Naming Addressing
+OrgAbusePhone:  +1-585-423-6112
+OrgAbuseEmail:  IP.Name.Mgmt@xerox.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/NNA19-ARIN
+
+OrgTechHandle: NNA19-ARIN
+OrgTechName:   Network Naming Addressing
+OrgTechPhone:  +1-585-423-6112
+OrgTechEmail:  IP.Name.Mgmt@xerox.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/NNA19-ARIN
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2022, American Registry for Internet Numbers, Ltd.
+#

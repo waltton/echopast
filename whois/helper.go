@@ -2,7 +2,8 @@ package whois
 
 import "regexp"
 
-var reKV = regexp.MustCompile(`(\w*):\s*(.*)`)
+var reKV = regexp.MustCompile(`([\w-]*):\s*(.*)`)
+var reKVo = regexp.MustCompile(`([\w-]*):\s*(.*)?`)
 
 func isZeroString(value string) bool {
 	bs := []byte(value)

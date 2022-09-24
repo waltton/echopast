@@ -9,15 +9,15 @@ import (
 )
 
 func TestLookup(t *testing.T) {
-	result, err := Lookup("1.1.1.1")
+	result, err := Lookup("13.13.13.13")
 	require.NoError(t, err)
 
-	w, err := parseWhoisIANA(result)
-	require.NoError(t, err)
+	// w, err := parseWhoisIANA(result)
+	// require.NoError(t, err)
 
-	fmt.Printf("w: %+v", w)
+	// fmt.Printf("w: %+v", w)
 
-	// fmt.Println("result", result)
+	fmt.Println("result", result)
 }
 
 func TestIsZeroString(t *testing.T) {

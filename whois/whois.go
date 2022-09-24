@@ -19,6 +19,10 @@ func Lookup(param string) (result string, err error) {
 		return "", err
 	}
 
+	if whois.Refer == "" {
+		return
+	}
+
 	result, err = rawQuery(whois.Refer, param)
 	if err != nil {
 		return "", err
