@@ -1,8 +1,6 @@
 package whois
 
 import (
-	"encoding/json"
-	"fmt"
 	"io"
 	"log"
 	"net"
@@ -37,7 +35,7 @@ func Lookup(param string) (result string, err error) {
 		return "", err
 	}
 
-	fmt.Println("result", result)
+	// fmt.Println("result", result)
 
 	whois, err = parseWhois(result)
 	if err != nil {
@@ -46,9 +44,9 @@ func Lookup(param string) (result string, err error) {
 
 	_ = whois
 
-	data, err := json.Marshal(whois)
-	fmt.Println("data", string(data))
-	fmt.Println("err", err)
+	// data, err := json.Marshal(whois)
+	// fmt.Println("data", string(data))
+	// fmt.Println("err", err)
 
 	return
 }
