@@ -124,6 +124,7 @@ func indexHandler(sc *storage.Client, bucket string, p *bluemonday.Policy) func(
 			"request":     string(data),
 			"ua":          ua,
 			"country":     country,
+			"method":      r.Method,
 		})
 		if err != nil {
 			log.Printf("Failed writing record: %v", err)

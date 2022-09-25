@@ -8,6 +8,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
@@ -37,10 +38,10 @@ func TestLookupFromFile(t *testing.T) {
 		require.NoError(t, err)
 
 		i++
-		n := 4
-		if i < n || i > n {
-			continue
-		}
+		// n := 7
+		// if i < n || i > n {
+		// 	continue
+		// }
 
 		line = strings.TrimSpace(line)
 
@@ -51,11 +52,13 @@ func TestLookupFromFile(t *testing.T) {
 			w, err := parseWhois(result)
 			require.NoError(t, err)
 
-			fmt.Println(line)
-			fmt.Println("Country", w.Country())
-			fmt.Println("Refer", w.Refer())
-			fmt.Println("Registry", w.Registry())
-			fmt.Println("-------")
+			assert.NotEmpty(t, w.Country())
+
+			// fmt.Println(line)
+			// fmt.Println("Country", w.Country())
+			// fmt.Println("Refer", w.Refer())
+			// fmt.Println("Registry", w.Registry())
+			// fmt.Println("-------")
 
 		})
 

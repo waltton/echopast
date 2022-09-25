@@ -3,6 +3,7 @@ CREATE TABLE logs (
     timestamp        timestamp,
     hash             TEXT,
     url              TEXT,
+    method           TEXT,
     host             TEXT,
     user_agent       TEXT,
     accept_encoding  TEXT,
@@ -11,6 +12,7 @@ CREATE TABLE logs (
     ip               INET NULL,
     protocol         TEXT,
     headers          JSONB,
+    body             BYTEA,
     PRIMARY KEY(timestamp, hash)
 );
 

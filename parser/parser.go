@@ -26,6 +26,7 @@ type Log struct {
 
 type Request struct {
 	URL            string
+	Method         string
 	Host           string
 	UserAgent      string
 	AcceptEncoding string
@@ -34,6 +35,7 @@ type Request struct {
 	IP             net.IP
 	Protocol       string
 	Headers        map[string][]string
+	Body           []byte
 }
 
 func parseFile(name string) (logs []Log, err error) {
@@ -104,9 +106,15 @@ func parseRequest(request string) Request {
 		headers[k] = v
 	}
 
+	bodyBytes, err := io.ReadAll(req.Body)
+	if err != nil {
+		log.Panic(err)
+	}
+
 	return Request{
 		URL:            req.URL.String(),
 		Host:           req.Host,
+		Method:         req.Method,
 		UserAgent:      req.Header.Get("User-Agent"),
 		AcceptEncoding: req.Header.Get("Accept-Encoding"),
 		Accept:         req.Header.Get("Accept"),
@@ -114,5 +122,6 @@ func parseRequest(request string) Request {
 		IP:             ip,
 		Protocol:       protocol,
 		Headers:        headers,
+		Body:           bodyBytes,
 	}
 }

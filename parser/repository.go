@@ -9,7 +9,7 @@ import (
 )
 
 const qInsert = `
-	INSERT INTO logs (timestamp, hash, url, host, user_agent, accept_encoding, accept, cookie, ip, protocol, headers)
+	INSERT INTO logs (timestamp, hash, url, method, host, user_agent, accept_encoding, accept, cookie, ip, protocol, headers, body)
 	VALUES %s
 	ON CONFLICT DO NOTHING
 `
@@ -32,6 +32,7 @@ func writeLogs(db *sql.DB, logs []Log) error {
 			l.Timestamp,
 			l.Hash,
 			l.Request.URL,
+			l.Request.Method,
 			l.Request.Host,
 			l.Request.UserAgent,
 			l.Request.AcceptEncoding,
@@ -40,10 +41,11 @@ func writeLogs(db *sql.DB, logs []Log) error {
 			ip,
 			l.Request.Protocol,
 			headers,
+			l.Request.Body,
 		)
 	}
 
-	q := fmt.Sprintf(qInsert, buildParams(11, len(logs)))
+	q := fmt.Sprintf(qInsert, buildParams(13, len(logs)))
 
 	_, err := db.Exec(q, args...)
 	if err != nil {
