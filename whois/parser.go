@@ -5,6 +5,7 @@ import (
 	"io"
 	"log"
 	"regexp"
+	"strconv"
 	"strings"
 )
 
@@ -13,15 +14,6 @@ type Whois struct {
 }
 
 var reKV = regexp.MustCompile(`([\w-]*):\s*(.*)`)
-
-func isZeroString(value string) bool {
-	bs := []byte(value)
-	var total int64
-	for _, b := range bs {
-		total += int64(b)
-	}
-	return total == 0
-}
 
 func parseWhois(raw string) (w Whois, err error) {
 	var i int
@@ -34,7 +26,7 @@ func parseWhois(raw string) (w Whois, err error) {
 		i++
 
 		line, err := rd.ReadString('\n')
-		if isZeroString(line) && err != nil {
+		if line == "" && err != nil {
 			if err == io.EOF {
 				break
 			}
@@ -44,7 +36,6 @@ func parseWhois(raw string) (w Whois, err error) {
 		}
 
 		line = strings.TrimSpace(line)
-		line = strings.Trim(line, "\u0000")
 
 		if line == "" {
 			if len(w.Data[objc]) > 0 {
@@ -162,8 +153,11 @@ func (w Whois) Country() string {
 			}
 		}
 	case RegistryARIN:
-		if len(w.Data) > 4 {
-			val, ok := w.Data[3]["Country"]
+		begin, end := w.arinGetBlock()
+		_ = end
+
+		if len(w.Data) > begin+2 {
+			val, ok := w.Data[begin+1]["Country"]
 			if ok {
 				if len(val) == 1 {
 					return val[0]
@@ -208,4 +202,57 @@ func (w Whois) Country() string {
 		}
 	}
 	return ""
+}
+
+func (w Whois) arinGetBlock() (begin, end int) {
+	var starts, ends []int
+	bnc, enc := -1, -1
+	for i := range w.Data {
+		val, ok := w.Data[i]["#"]
+		if ok {
+			if len(val) == 1 {
+				if val[0] == "start" {
+					starts = append(starts, i)
+				} else if val[0] == "end" {
+					ends = append(ends, i)
+				}
+			}
+		} else {
+			if bnc == -1 {
+				bnc = i
+			}
+			enc = i
+		}
+	}
+
+	if len(starts) == 0 {
+		return bnc, enc
+	}
+
+	var cidrsSize []int
+	for _, sidx := range starts {
+		if len(w.Data) > sidx+1 {
+			val, ok := w.Data[sidx+1]["CIDR"]
+			if ok {
+				if len(val) == 1 {
+					sval := strings.Split(val[0], "/")
+					if len(sval) == 2 {
+						size, err := strconv.Atoi(sval[1])
+						if err == nil {
+							cidrsSize = append(cidrsSize, size)
+						}
+					}
+				}
+			}
+		}
+	}
+
+	var maxValIdx int
+	for i, val := range cidrsSize {
+		if val > cidrsSize[maxValIdx] {
+			maxValIdx = i
+		}
+	}
+
+	return starts[maxValIdx] + 1, ends[maxValIdx] - 1
 }
