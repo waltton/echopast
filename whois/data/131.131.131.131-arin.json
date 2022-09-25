@@ -1,0 +1,77 @@
+[
+    {
+        "#": [
+            "",
+            "ARIN WHOIS data and services are subject to the Terms of Use",
+            "available at: https://www.arin.net/resources/registry/whois/tou/",
+            "",
+            "If you see inaccuracies in the results, please report at",
+            "https://www.arin.net/resources/registry/whois/inaccuracy_reporting/",
+            "",
+            "Copyright 1997-2022, American Registry for Internet Numbers, Ltd.",
+            ""
+        ]
+    },
+    {
+        "#": [
+            "",
+            "Query terms are ambiguous.  The query is assumed to be:",
+            "\"n 131.131.131.131\"",
+            "",
+            "Use \"?\" to get help.",
+            ""
+        ]
+    },
+    {
+        "CIDR": ["131.131.0.0/16"],
+        "NetHandle": ["NET-131-131-0-0-1"],
+        "NetName": ["GDIT-NET4"],
+        "NetRange": ["131.131.0.0 - 131.131.255.255"],
+        "NetType": ["Direct Allocation"],
+        "Organization": ["General Dynamics Information Technology, Inc. (GDIT)"],
+        "OriginAS": ["AS10859"],
+        "Parent": ["NET131 (NET-131-0-0-0-0)"],
+        "Ref": ["https://rdap.arin.net/registry/ip/131.131.0.0"],
+        "RegDate": ["1988-09-22"],
+        "Updated": ["2021-12-14"]
+    },
+    {
+        "Address": ["3150 Fairview Park Drive"],
+        "City": ["Falls Church"],
+        "Country": ["US"],
+        "OrgId": ["GDIT"],
+        "OrgName": ["General Dynamics Information Technology, Inc."],
+        "PostalCode": ["22042"],
+        "Ref": ["https://rdap.arin.net/registry/entity/GDIT"],
+        "RegDate": ["2007-02-26"],
+        "StateProv": ["VA"],
+        "Updated": ["2021-01-16"]
+    },
+    {
+        "OrgTechEmail": ["dns-admin@gdit.com"],
+        "OrgTechHandle": ["DNSAD189-ARIN"],
+        "OrgTechName": ["dns-admin"],
+        "OrgTechPhone": ["+1-703-246-0200"],
+        "OrgTechRef": ["https://rdap.arin.net/registry/entity/DNSAD189-ARIN"]
+    },
+    {
+        "OrgAbuseEmail": ["dns-admin@gdit.com"],
+        "OrgAbuseHandle": ["DNSAD189-ARIN"],
+        "OrgAbuseName": ["dns-admin"],
+        "OrgAbusePhone": ["+1-703-246-0200"],
+        "OrgAbuseRef": ["https://rdap.arin.net/registry/entity/DNSAD189-ARIN"]
+    },
+    {
+        "#": [
+            "",
+            "ARIN WHOIS data and services are subject to the Terms of Use",
+            "available at: https://www.arin.net/resources/registry/whois/tou/",
+            "",
+            "If you see inaccuracies in the results, please report at",
+            "https://www.arin.net/resources/registry/whois/inaccuracy_reporting/",
+            "",
+            "Copyright 1997-2022, American Registry for Internet Numbers, Ltd.",
+            ""
+        ]
+    }
+]

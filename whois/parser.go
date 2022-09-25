@@ -130,11 +130,74 @@ func (w Whois) Registry() string {
 func (w Whois) Refer() string {
 	switch w.Registry() {
 	case RegistryIANA:
-		if len(w) > 1 {
-			val, ok := w[0]["refer"]
+		if len(w) > 2 {
+			val, ok := w[1]["refer"]
 			if ok {
 				if len(val) == 1 {
 					return val[0]
+				}
+			}
+		}
+	}
+	return ""
+}
+
+func (w Whois) Country() string {
+	switch w.Registry() {
+	case RegistryAPNIC:
+		if len(w) > 4 {
+			_, ok := w[3]["inetnum"]
+			if ok {
+				val, ok := w[3]["country"]
+				if ok {
+					if len(val) == 1 {
+						return val[0]
+					}
+				}
+			}
+		}
+	case RegistryARIN:
+		if len(w) > 4 {
+			val, ok := w[3]["Country"]
+			if ok {
+				if len(val) == 1 {
+					return val[0]
+				}
+			}
+		}
+	case RegistryLACNIC:
+		if len(w) > 4 {
+			_, ok := w[3]["inetnum"]
+			if ok {
+				val, ok := w[3]["country"]
+				if ok {
+					if len(val) == 1 {
+						return val[0]
+					}
+				}
+			}
+		}
+	case RegistryAFRINIC:
+		if len(w) > 5 {
+			_, ok := w[4]["inetnum"]
+			if ok {
+				val, ok := w[4]["country"]
+				if ok {
+					if len(val) == 1 {
+						return val[0]
+					}
+				}
+			}
+		}
+	case RegistryRIPE:
+		if len(w) > 1 {
+			_, ok := w[0]["inetnum"]
+			if ok {
+				val, ok := w[0]["country"]
+				if ok {
+					if len(val) == 1 {
+						return val[0]
+					}
 				}
 			}
 		}
