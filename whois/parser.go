@@ -8,7 +8,9 @@ import (
 	"strings"
 )
 
-type Whois []map[string][]string
+type Whois struct {
+	Data []map[string][]string
+}
 
 var reKV = regexp.MustCompile(`([\w-]*):\s*(.*)`)
 
@@ -26,7 +28,7 @@ func parseWhois(raw string) (w Whois, err error) {
 	var objc int
 	var prevk string
 
-	w = append(w, make(map[string][]string))
+	w.Data = append(w.Data, make(map[string][]string))
 	rd := bufio.NewReader(strings.NewReader(raw))
 	for {
 		i++
@@ -45,30 +47,30 @@ func parseWhois(raw string) (w Whois, err error) {
 		line = strings.Trim(line, "\u0000")
 
 		if line == "" {
-			if len(w[objc]) > 0 {
+			if len(w.Data[objc]) > 0 {
 				objc++
-				w = append(w, make(map[string][]string))
+				w.Data = append(w.Data, make(map[string][]string))
 			}
 
 			continue
 		}
 
 		if line[0] == '#' || line[0] == '%' {
-			w[objc][string(line[0])] = append(w[objc][string(line[0])], strings.Trim(line, " #%"))
+			w.Data[objc][string(line[0])] = append(w.Data[objc][string(line[0])], strings.Trim(line, " #%"))
 			continue
 		}
 
 		m := reKV.FindStringSubmatch(line)
 		if len(m) == 3 {
-			w[objc][m[1]] = append(w[objc][m[1]], m[2])
+			w.Data[objc][m[1]] = append(w.Data[objc][m[1]], m[2])
 			prevk = m[1]
 		} else {
-			if len(w[objc][prevk]) == 0 {
-				log.Printf("no where to put '%s'; objc: %d, prevk: %s\n", line, objc, prevk)
-			} else if strings.TrimSpace(w[objc][prevk][len(w[objc][prevk])-1]) == "" {
+			if len(w.Data[objc][prevk]) == 0 {
+				log.Printf("no w.Datahere to put '%s'; objc: %d, prevk: %s\n", line, objc, prevk)
+			} else if strings.TrimSpace(w.Data[objc][prevk][len(w.Data[objc][prevk])-1]) == "" {
 				log.Printf("last line for previous key is empty; objc: %d, prevk: %s\n", objc, prevk)
 			} else {
-				w[objc][prevk][len(w[objc][prevk])-1] = w[objc][prevk][len(w[objc][prevk])-1] + "\n" + strings.TrimSpace(line)
+				w.Data[objc][prevk][len(w.Data[objc][prevk])-1] = w.Data[objc][prevk][len(w.Data[objc][prevk])-1] + "\n" + strings.TrimSpace(line)
 			}
 		}
 
@@ -87,11 +89,11 @@ const (
 )
 
 func (w Whois) Registry() string {
-	if len(w) < 1 {
+	if len(w.Data) < 1 {
 		return ""
 	}
 
-	val, ok := w[0]["%"]
+	val, ok := w.Data[0]["%"]
 	if ok {
 		if len(val) > 0 {
 			switch val[0] {
@@ -109,7 +111,7 @@ func (w Whois) Registry() string {
 		}
 	}
 
-	val, ok = w[0]["#"]
+	val, ok = w.Data[0]["#"]
 	if ok {
 		if len(val) > 1 {
 			if val[1] == "ARIN WHOIS data and services are subject to the Terms of Use" {
@@ -118,7 +120,7 @@ func (w Whois) Registry() string {
 		}
 	}
 
-	val, ok = w[0]["source"]
+	val, ok = w.Data[0]["source"]
 	if ok {
 		if len(val) > 0 {
 			if val[0] == "RIPE" {
@@ -133,8 +135,8 @@ func (w Whois) Registry() string {
 func (w Whois) Refer() string {
 	switch w.Registry() {
 	case RegistryIANA:
-		if len(w) > 2 {
-			val, ok := w[1]["refer"]
+		if len(w.Data) > 2 {
+			val, ok := w.Data[1]["refer"]
 			if ok {
 				if len(val) == 1 {
 					return val[0]
@@ -148,10 +150,10 @@ func (w Whois) Refer() string {
 func (w Whois) Country() string {
 	switch w.Registry() {
 	case RegistryAPNIC:
-		if len(w) > 4 {
-			_, ok := w[3]["inetnum"]
+		if len(w.Data) > 4 {
+			_, ok := w.Data[3]["inetnum"]
 			if ok {
-				val, ok := w[3]["country"]
+				val, ok := w.Data[3]["country"]
 				if ok {
 					if len(val) == 1 {
 						return val[0]
@@ -160,8 +162,8 @@ func (w Whois) Country() string {
 			}
 		}
 	case RegistryARIN:
-		if len(w) > 4 {
-			val, ok := w[3]["Country"]
+		if len(w.Data) > 4 {
+			val, ok := w.Data[3]["Country"]
 			if ok {
 				if len(val) == 1 {
 					return val[0]
@@ -169,10 +171,10 @@ func (w Whois) Country() string {
 			}
 		}
 	case RegistryLACNIC:
-		if len(w) > 4 {
-			_, ok := w[3]["inetnum"]
+		if len(w.Data) > 4 {
+			_, ok := w.Data[3]["inetnum"]
 			if ok {
-				val, ok := w[3]["country"]
+				val, ok := w.Data[3]["country"]
 				if ok {
 					if len(val) == 1 {
 						return val[0]
@@ -181,10 +183,10 @@ func (w Whois) Country() string {
 			}
 		}
 	case RegistryAFRINIC:
-		if len(w) > 5 {
-			_, ok := w[4]["inetnum"]
+		if len(w.Data) > 5 {
+			_, ok := w.Data[4]["inetnum"]
 			if ok {
-				val, ok := w[4]["country"]
+				val, ok := w.Data[4]["country"]
 				if ok {
 					if len(val) == 1 {
 						return val[0]
@@ -193,10 +195,10 @@ func (w Whois) Country() string {
 			}
 		}
 	case RegistryRIPE:
-		if len(w) > 1 {
-			_, ok := w[0]["inetnum"]
+		if len(w.Data) > 1 {
+			_, ok := w.Data[0]["inetnum"]
 			if ok {
-				val, ok := w[0]["country"]
+				val, ok := w.Data[0]["country"]
 				if ok {
 					if len(val) == 1 {
 						return val[0]

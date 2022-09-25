@@ -3,6 +3,7 @@ package whois
 import (
 	"bufio"
 	"fmt"
+	"io"
 	"os"
 	"strings"
 	"testing"
@@ -30,14 +31,17 @@ func TestLookupFromFile(t *testing.T) {
 	var i int
 	rd := bufio.NewReader(f)
 	for {
-		i++
-
-		if i > 1 {
-			return
-		}
-
 		line, err := rd.ReadString('\n')
+		if err != nil && err == io.EOF {
+			break
+		}
 		require.NoError(t, err)
+
+		i++
+		n := 2
+		if i < n || i > n {
+			continue
+		}
 
 		line = strings.TrimSpace(line)
 

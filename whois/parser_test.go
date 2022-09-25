@@ -61,6 +61,11 @@ func TestParseWhois(t *testing.T) {
 			registry: RegistryAPNIC,
 			country:  "AU",
 		},
+		{
+			name:     "3.81.245.94-arin",
+			registry: RegistryARIN,
+			country:  "US",
+		},
 	}
 
 	for _, tc := range testCases {
@@ -72,18 +77,18 @@ func TestParseWhois(t *testing.T) {
 			require.NoError(t, err)
 
 			ew := Whois{}
-			err = json.NewDecoder(f).Decode(&ew)
+			err = json.NewDecoder(f).Decode(&ew.Data)
 			require.NoError(t, err)
 
 			result, err := parseWhois(string(raw))
 			require.NoError(t, err)
 
-			assert.Equal(t, len(ew), len(result))
-			for objc := range ew {
-				for k := range ew[objc] {
-					val, ok := result[objc][k]
-					require.True(t, ok, "no value found for objc: %d, key: %s, object: %+v", objc, k, result[objc])
-					assert.Equal(t, ew[objc][k], val)
+			assert.Equal(t, len(ew.Data), len(result.Data))
+			for objc := range ew.Data {
+				for k := range ew.Data[objc] {
+					val, ok := result.Data[objc][k]
+					require.True(t, ok, "no value found for objc: %d, key: %s, object: %+v", objc, k, result.Data[objc])
+					assert.Equal(t, ew.Data[objc][k], val)
 				}
 			}
 

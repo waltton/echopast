@@ -6,6 +6,7 @@ import (
 	"io"
 	"log"
 	"net"
+	"strings"
 	"time"
 )
 
@@ -16,16 +17,16 @@ func Lookup(param string) (result string, err error) {
 		return "", err
 	}
 
-	fmt.Println("result", result)
+	// fmt.Println("result", result)
 
 	whois, err := parseWhois(result)
 	if err != nil {
 		return "", err
 	}
 
-	data, err := json.Marshal(whois)
-	fmt.Println("data", string(data))
-	fmt.Println("err", err)
+	// data, err := json.Marshal(whois)
+	// fmt.Println("data", string(data))
+	// fmt.Println("err", err)
 
 	if whois.Refer() == "" {
 		return
@@ -43,7 +44,7 @@ func Lookup(param string) (result string, err error) {
 		return "", err
 	}
 
-	data, err = json.Marshal(whois)
+	data, err := json.Marshal(whois)
 	fmt.Println("data", string(data))
 	fmt.Println("err", err)
 
@@ -54,6 +55,10 @@ func rawQuery(addr, param string) (result string, err error) {
 	conn, err := net.Dial("tcp", addr+":43")
 	if err != nil {
 		return "", err
+	}
+
+	if strings.Contains(addr, "arin") {
+		param = "+ " + param
 	}
 
 	_, err = conn.Write([]byte(param + "\r\n"))

@@ -1,0 +1,165 @@
+[
+    {
+        "#": [
+            "",
+            "ARIN WHOIS data and services are subject to the Terms of Use",
+            "available at: https://www.arin.net/resources/registry/whois/tou/",
+            "",
+            "If you see inaccuracies in the results, please report at",
+            "https://www.arin.net/resources/registry/whois/inaccuracy_reporting/",
+            "",
+            "Copyright 1997-2022, American Registry for Internet Numbers, Ltd.",
+            ""
+        ]
+    },
+    {
+        "#": [
+            "",
+            "Query terms are ambiguous.  The query is assumed to be:",
+            "\"n + 3.81.245.94\"",
+            "",
+            "Use \"?\" to get help.",
+            ""
+        ]
+    },
+    {
+        "#": ["start"]
+    },
+    {
+        "CIDR": ["3.0.0.0/9"],
+        "NetHandle": ["NET-3-0-0-0-1"],
+        "NetName": ["AT-88-Z"],
+        "NetRange": ["3.0.0.0 - 3.127.255.255"],
+        "NetType": ["Direct Allocation"],
+        "Organization": ["Amazon Technologies Inc. (AT-88-Z)"],
+        "OriginAS": [""],
+        "Parent": ["NET3 (NET-3-0-0-0-0)"],
+        "Ref": ["https://rdap.arin.net/registry/ip/3.0.0.0"],
+        "RegDate": ["2017-12-20"],
+        "Updated": ["2022-05-18"]
+    },
+    {
+        "Address": ["410 Terry Ave N."],
+        "City": ["Seattle"],
+        "Comment": [
+            "All abuse reports MUST include:",
+            "* src IP",
+            "* dest IP (your IP)",
+            "* dest port",
+            "* Accurate date/timestamp and timezone of activity",
+            "* Intensity/frequency (short log extracts)",
+            "* Your contact details (phone and email) Without these we will be unable to identify the correct owner of the IP address at that point in time."
+        ],
+        "Country": ["US"],
+        "OrgId": ["AT-88-Z"],
+        "OrgName": ["Amazon Technologies Inc."],
+        "PostalCode": ["98109"],
+        "Ref": ["https://rdap.arin.net/registry/entity/AT-88-Z"],
+        "RegDate": ["2011-12-08"],
+        "StateProv": ["WA"],
+        "Updated": ["2021-07-28"]
+    },
+    {
+        "OrgNOCEmail": ["amzn-noc-contact@amazon.com"],
+        "OrgNOCHandle": ["AANO1-ARIN"],
+        "OrgNOCName": ["Amazon AWS Network Operations"],
+        "OrgNOCPhone": ["+1-206-555-0000"],
+        "OrgNOCRef": ["https://rdap.arin.net/registry/entity/AANO1-ARIN"]
+    },
+    {
+        "OrgRoutingEmail": ["aws-rpki-routing-poc@amazon.com"],
+        "OrgRoutingHandle": ["ARMP-ARIN"],
+        "OrgRoutingName": ["AWS RPKI Management POC"],
+        "OrgRoutingPhone": ["+1-206-266-4064"],
+        "OrgRoutingRef": ["https://rdap.arin.net/registry/entity/ARMP-ARIN"]
+    },
+    {
+        "OrgAbuseEmail": ["abuse@amazonaws.com"],
+        "OrgAbuseHandle": ["AEA8-ARIN"],
+        "OrgAbuseName": ["Amazon EC2 Abuse"],
+        "OrgAbusePhone": ["+1-206-555-0000"],
+        "OrgAbuseRef": ["https://rdap.arin.net/registry/entity/AEA8-ARIN"]
+    },
+    {
+        "OrgTechEmail": ["amzn-noc-contact@amazon.com"],
+        "OrgTechHandle": ["ANO24-ARIN"],
+        "OrgTechName": ["Amazon EC2 Network Operations"],
+        "OrgTechPhone": ["+1-206-555-0000"],
+        "OrgTechRef": ["https://rdap.arin.net/registry/entity/ANO24-ARIN"]
+    },
+    {
+        "OrgRoutingEmail": ["aws-routing-poc@amazon.com"],
+        "OrgRoutingHandle": ["IPROU3-ARIN"],
+        "OrgRoutingName": ["IP Routing"],
+        "OrgRoutingPhone": ["+1-206-555-0000"],
+        "OrgRoutingRef": ["https://rdap.arin.net/registry/entity/IPROU3-ARIN"]
+    },
+    {
+        "#": ["end"]
+    },
+    {
+        "#": ["start"]
+    },
+    {
+        "CIDR": ["3.80.0.0/12"],
+        "NetHandle": ["NET-3-80-0-0-1"],
+        "NetName": ["AMAZON-IAD"],
+        "NetRange": ["3.80.0.0 - 3.95.255.255"],
+        "NetType": ["Reallocated"],
+        "Organization": ["Amazon Data Services NoVa (ADSN-1)"],
+        "OriginAS": ["AS16509, AS14618"],
+        "Parent": ["AT-88-Z (NET-3-0-0-0-1)"],
+        "Ref": ["https://rdap.arin.net/registry/ip/3.80.0.0"],
+        "RegDate": ["2018-08-22"],
+        "Updated": ["2018-08-22"]
+    },
+    {
+        "Address": ["13200 Woodland Park Road"],
+        "City": ["Herndon"],
+        "Country": ["US"],
+        "OrgId": ["ADSN-1"],
+        "OrgName": ["Amazon Data Services NoVa"],
+        "PostalCode": ["20171"],
+        "Ref": ["https://rdap.arin.net/registry/entity/ADSN-1"],
+        "RegDate": ["2018-04-25"],
+        "StateProv": ["VA"],
+        "Updated": ["2019-08-02"]
+    },
+    {
+        "OrgAbuseEmail": ["abuse@amazonaws.com"],
+        "OrgAbuseHandle": ["AEA8-ARIN"],
+        "OrgAbuseName": ["Amazon EC2 Abuse"],
+        "OrgAbusePhone": ["+1-206-555-0000"],
+        "OrgAbuseRef": ["https://rdap.arin.net/registry/entity/AEA8-ARIN"]
+    },
+    {
+        "OrgNOCEmail": ["amzn-noc-contact@amazon.com"],
+        "OrgNOCHandle": ["AANO1-ARIN"],
+        "OrgNOCName": ["Amazon AWS Network Operations"],
+        "OrgNOCPhone": ["+1-206-555-0000"],
+        "OrgNOCRef": ["https://rdap.arin.net/registry/entity/AANO1-ARIN"]
+    },
+    {
+        "OrgTechEmail": ["amzn-noc-contact@amazon.com"],
+        "OrgTechHandle": ["ANO24-ARIN"],
+        "OrgTechName": ["Amazon EC2 Network Operations"],
+        "OrgTechPhone": ["+1-206-555-0000"],
+        "OrgTechRef": ["https://rdap.arin.net/registry/entity/ANO24-ARIN"]
+    },
+    {
+        "#": ["end"]
+    },
+    {
+        "#": [
+            "",
+            "ARIN WHOIS data and services are subject to the Terms of Use",
+            "available at: https://www.arin.net/resources/registry/whois/tou/",
+            "",
+            "If you see inaccuracies in the results, please report at",
+            "https://www.arin.net/resources/registry/whois/inaccuracy_reporting/",
+            "",
+            "Copyright 1997-2022, American Registry for Internet Numbers, Ltd.",
+            ""
+        ]
+    }
+]
