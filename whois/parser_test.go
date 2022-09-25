@@ -71,6 +71,11 @@ func TestParseWhois(t *testing.T) {
 			registry: RegistryARIN,
 			country:  "NL",
 		},
+		{
+			name:     "188.166.125.106-ripe",
+			registry: RegistryRIPE,
+			country:  "NL",
+		},
 		// {
 		// 	name:     "51.79.29.48-ripe",
 		// 	registry: RegistryARIN,

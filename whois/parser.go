@@ -98,6 +98,8 @@ func (w Whois) Registry() string {
 				fallthrough
 			case "Whois data copyright terms    http://www.apnic.net/db/dbcopyright.html":
 				return RegistryAPNIC
+			case "This is the RIPE Database query service.":
+				return RegistryRIPE
 			}
 		}
 	}
@@ -154,8 +156,8 @@ func (w Whois) Country() string {
 		}
 	case RegistryARIN:
 		begin, end := w.arinGetBlock()
-		for i := range w.Data[begin-1 : end] {
-			val, ok := w.Data[i]["Country"]
+		for _, obj := range w.Data[begin:end] {
+			val, ok := obj["Country"]
 			if ok {
 				if len(val) == 1 {
 					return val[0]
@@ -187,10 +189,12 @@ func (w Whois) Country() string {
 			}
 		}
 	case RegistryRIPE:
-		if len(w.Data) > 1 {
-			_, ok := w.Data[0]["inetnum"]
+		begin, end := w.ripeGetBlock()
+
+		for _, obj := range w.Data[begin:end] {
+			_, ok := obj["inetnum"]
 			if ok {
-				val, ok := w.Data[0]["country"]
+				val, ok := obj["country"]
 				if ok {
 					if len(val) == 1 {
 						return val[0]
@@ -253,4 +257,18 @@ func (w Whois) arinGetBlock() (begin, end int) {
 	}
 
 	return starts[maxValIdx] + 1, ends[maxValIdx] - 1
+}
+
+func (w Whois) ripeGetBlock() (begin, end int) {
+	begin, end = -1, -1
+	for i := range w.Data {
+		_, ok := w.Data[i]["%"]
+		if !ok {
+			if begin == -1 {
+				begin = i
+			}
+			end = i
+		}
+	}
+	return
 }
