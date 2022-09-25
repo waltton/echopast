@@ -154,10 +154,8 @@ func (w Whois) Country() string {
 		}
 	case RegistryARIN:
 		begin, end := w.arinGetBlock()
-		_ = end
-
-		if len(w.Data) > begin+2 {
-			val, ok := w.Data[begin+1]["Country"]
+		for i := range w.Data[begin-1 : end] {
+			val, ok := w.Data[i]["Country"]
 			if ok {
 				if len(val) == 1 {
 					return val[0]

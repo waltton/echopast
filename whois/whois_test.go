@@ -37,7 +37,7 @@ func TestLookupFromFile(t *testing.T) {
 		require.NoError(t, err)
 
 		i++
-		n := 2
+		n := 4
 		if i < n || i > n {
 			continue
 		}
