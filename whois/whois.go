@@ -16,6 +16,8 @@ func Lookup(param string) (result string, err error) {
 		return "", err
 	}
 
+	fmt.Println("result", result)
+
 	whois, err := parseWhois(result)
 	if err != nil {
 		return "", err
@@ -33,6 +35,8 @@ func Lookup(param string) (result string, err error) {
 	if err != nil {
 		return "", err
 	}
+
+	fmt.Println("result", result)
 
 	whois, err = parseWhois(result)
 	if err != nil {
@@ -61,7 +65,7 @@ func rawQuery(addr, param string) (result string, err error) {
 		conn.SetReadDeadline(time.Now().Add(time.Second * 30))
 
 		data := make([]byte, 4096)
-		_, err := conn.Read(data)
+		n, err := conn.Read(data)
 		if err != nil {
 			if err == io.EOF {
 				break
@@ -73,7 +77,7 @@ func rawQuery(addr, param string) (result string, err error) {
 			}
 		}
 
-		result += string(data)
+		result += string(data[:n])
 	}
 
 	return

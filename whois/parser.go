@@ -42,6 +42,7 @@ func parseWhois(raw string) (w Whois, err error) {
 		}
 
 		line = strings.TrimSpace(line)
+		line = strings.Trim(line, "\u0000")
 
 		if line == "" {
 			if len(w[objc]) > 0 {
@@ -62,10 +63,12 @@ func parseWhois(raw string) (w Whois, err error) {
 			w[objc][m[1]] = append(w[objc][m[1]], m[2])
 			prevk = m[1]
 		} else {
-			if strings.TrimSpace(w[objc][prevk][len(w[objc][prevk])-1]) != "" {
-				w[objc][prevk][len(w[objc][prevk])-1] = w[objc][prevk][len(w[objc][prevk])-1] + "\n" + strings.TrimSpace(line)
-			} else {
+			if len(w[objc][prevk]) == 0 {
+				log.Printf("no where to put '%s'; objc: %d, prevk: %s\n", line, objc, prevk)
+			} else if strings.TrimSpace(w[objc][prevk][len(w[objc][prevk])-1]) == "" {
 				log.Printf("last line for previous key is empty; objc: %d, prevk: %s\n", objc, prevk)
+			} else {
+				w[objc][prevk][len(w[objc][prevk])-1] = w[objc][prevk][len(w[objc][prevk])-1] + "\n" + strings.TrimSpace(line)
 			}
 		}
 
@@ -91,16 +94,16 @@ func (w Whois) Registry() string {
 	val, ok := w[0]["%"]
 	if ok {
 		if len(val) > 0 {
-			if val[0] == "IANA WHOIS server" {
+			switch val[0] {
+			case "IANA WHOIS server":
 				return RegistryIANA
-			}
-			if val[0] == "This is the AfriNIC Whois server." {
+			case "This is the AfriNIC Whois server.":
 				return RegistryAFRINIC
-			}
-			if val[0] == "Joint Whois - whois.lacnic.net" {
+			case "Joint Whois - whois.lacnic.net":
 				return RegistryLACNIC
-			}
-			if val[0] == "Whois data copyright terms    http://www.apnic.net/db/dbcopyright.html" {
+			case "[whois.apnic.net]":
+				fallthrough
+			case "Whois data copyright terms    http://www.apnic.net/db/dbcopyright.html":
 				return RegistryAPNIC
 			}
 		}

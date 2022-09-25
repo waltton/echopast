@@ -56,6 +56,11 @@ func TestParseWhois(t *testing.T) {
 			registry: RegistryARIN,
 			country:  "US",
 		},
+		{
+			name:     "163.123.142.153-apnic",
+			registry: RegistryAPNIC,
+			country:  "AU",
+		},
 	}
 
 	for _, tc := range testCases {

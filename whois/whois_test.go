@@ -1,7 +1,10 @@
 package whois
 
 import (
+	"bufio"
 	"fmt"
+	"os"
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -18,6 +21,42 @@ func TestLookup(t *testing.T) {
 	// fmt.Printf("w: %+v", w)
 
 	fmt.Println("result", result)
+}
+
+func TestLookupFromFile(t *testing.T) {
+	f, err := os.Open("./data/ips.txt")
+	require.NoError(t, err)
+
+	var i int
+	rd := bufio.NewReader(f)
+	for {
+		i++
+
+		if i > 1 {
+			return
+		}
+
+		line, err := rd.ReadString('\n')
+		require.NoError(t, err)
+
+		line = strings.TrimSpace(line)
+
+		t.Run(line, func(t *testing.T) {
+			result, err := Lookup(line)
+			require.NoError(t, err)
+
+			w, err := parseWhois(result)
+			require.NoError(t, err)
+
+			fmt.Println(line)
+			fmt.Println("Country", w.Country())
+			fmt.Println("Refer", w.Refer())
+			fmt.Println("Registry", w.Registry())
+			fmt.Println("-------")
+
+		})
+
+	}
 }
 
 func TestIsZeroString(t *testing.T) {

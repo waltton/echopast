@@ -1,0 +1,118 @@
+[
+    {
+        "%": [
+            "[whois.apnic.net]",
+            "Whois data copyright terms    http://www.apnic.net/db/dbcopyright.html"]
+    },
+    {
+        "%": [
+            "Information related to '163.0.0.0 - 163.255.255.255'"]
+    },
+    {
+        "%": [
+            "Abuse contact for '163.0.0.0 - 163.255.255.255' is 'helpdesk@apnic.net'"]
+    },
+    {
+        "abuse-c": ["AA1452-AP"],
+        "admin-c": ["IANA1-AP"],
+        "country": ["AU"],
+        "descr": ["Early registration addresses"],
+        "inetnum": ["163.0.0.0 - 163.255.255.255"],
+        "last-modified": ["2021-04-16T06:53:35Z"],
+        "mnt-by": ["APNIC-HM"],
+        "mnt-irt": ["IRT-APNIC-AP"],
+        "mnt-lower": ["APNIC-HM"],
+        "netname": ["ERX-NETBLOCK"],
+        "remarks": [
+            "------------------------------------------------------",
+            "Important:",
+            "",
+            "Networks in this range were allocated by InterNIC",
+            "prior to the formation of Regional Internet",
+            "Registries (RIRs): AfriNIC, APNIC, ARIN, LACNIC and RIPE NCC.",
+            "",
+            "Address ranges from this historical space have now",
+            "been transferred to the appropriate RIR database.remarks:",
+            "If your search has returned this record, it means the",
+            "address range is not administered by APNIC.",
+            "",
+            "Instead, please search one of the following databases:",
+            "",
+            "- AfriNIC (Africa)",
+            "website: http://www.afrinic.net/",
+            "command line: whois.afrinic.net",
+            "",
+            "- ARIN (Northern America)",
+            "website: http://www.arin.net/",
+            "command line: whois.arin.net",
+            "",
+            "- LACNIC (Latin America and the Carribean)",
+            "website: http://www.lacnic.net/",
+            "command line: whois.lacnic.net",
+            "",
+            "- RIPE NCC (Europe)",
+            "website: http://www.ripe.net/",
+            "command line: whois.ripe.net",
+            "",
+            "For information on the Early Registration Transfer",
+            "(ERX) project, see:",
+            "",
+            "http://www.apnic.net/db/erx",
+            "",
+            "------------------------------------------------------"
+        ],
+        "source": ["APNIC"],
+        "status": ["ALLOCATED PORTABLE"],
+        "tech-c": ["IANA1-AP" ]
+    },
+    {
+        "abuse-mailbox": ["helpdesk@apnic.net"],
+        "address": ["Brisbane, Australia"],
+        "admin-c": ["HM20-AP"],
+        "auth": ["# Filtered"],
+        "e-mail": ["helpdesk@apnic.net"],
+        "irt": ["IRT-APNIC-AP"],
+        "last-modified": ["2020-02-03T02:04:33Z"],
+        "mnt-by": ["APNIC-HM"],
+        "remarks": [
+            "APNIC is a Regional Internet Registry.",
+            "We do not operate the referring network and",
+            "are unable to investigate complaints of network abuse.",
+            "For information about IRT, see www.apnic.net/irt",
+            "helpdesk@apnic.net was validated on 2020-02-03"
+        ],
+        "source": ["APNIC"],
+        "tech-c": ["NO4-AP"]
+    },
+    {
+        "abuse-mailbox": ["helpdesk@apnic.net"],
+        "address": ["Brisbane, Australia"],
+        "admin-c": ["HM20-AP"],
+        "country": ["ZZ"],
+        "e-mail": ["helpdesk@apnic.net"],
+        "last-modified": ["2020-05-19T06:01:41Z"],
+        "mnt-by": ["APNIC-ABUSE"],
+        "nic-hdl": ["AA1452-AP"],
+        "phone": ["+000000000"],
+        "remarks": ["Generated from irt object IRT-APNIC-AP"],
+        "role": ["ABUSE APNICAP"],
+        "source": ["APNIC"],
+        "tech-c": ["NO4-AP"]
+    },
+    {
+        "address": ["see http://www.iana.org."],
+        "admin-c": ["IANA1-AP"],
+        "last-modified": ["2018-06-22T22:34:30Z"],
+        "mnt-by": ["MAINT-APNIC-AP"],
+        "nic-hdl": ["IANA1-AP"],
+        "remarks": ["For more information on IANA services","go to IANA web site at http://www.iana.org."],
+        "role": ["Internet Assigned Numbers Authority"],
+        "source": ["APNIC"],
+        "tech-c": ["IANA1-AP"]
+    },
+    {
+        "%": [
+            "This query was served by the APNIC Whois Service version 1.88.16 (WHOIS-JP1)"
+        ]
+    }
+]
