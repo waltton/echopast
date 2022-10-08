@@ -111,6 +111,16 @@ func parseRequest(request string) Request {
 		log.Panic(err)
 	}
 
+	// var country string
+	// if len(ip) > 0 {
+	// 	rw, err := whois.Lookup(ip.String())
+	// 	if err == nil {
+	// 		country = rw.Country()
+	// 	} else {
+	// 		log.Printf("fail to lookup ip: %s, error: %v", ip, err)
+	// 	}
+	// }
+
 	return Request{
 		URL:            req.URL.String(),
 		Host:           req.Host,
@@ -120,8 +130,9 @@ func parseRequest(request string) Request {
 		Accept:         req.Header.Get("Accept"),
 		Cookie:         req.Header.Get("Cookie"),
 		IP:             ip,
-		Protocol:       protocol,
-		Headers:        headers,
-		Body:           bodyBytes,
+		// Country:        country,
+		Protocol: protocol,
+		Headers:  headers,
+		Body:     bodyBytes,
 	}
 }

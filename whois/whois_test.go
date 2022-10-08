@@ -6,6 +6,7 @@ import (
 	"io"
 	"os"
 	"strings"
+	"sync"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -13,22 +14,39 @@ import (
 )
 
 func TestLookup(t *testing.T) {
+
 	result, err := Lookup("131.131.131.131")
 	require.NoError(t, err)
-
-	// w, err := parseWhoisIANA(result)
-	// require.NoError(t, err)
-
-	// fmt.Printf("w: %+v", w)
 
 	fmt.Println("result", result)
 }
 
 func TestLookupFromFile(t *testing.T) {
+	workers := 4
+	var wg sync.WaitGroup
+
+	ips := make(chan string, workers)
+
+	for i := 0; i < workers; i++ {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+
+			for ip := range ips {
+				t.Run(ip, func(t *testing.T) {
+					w, err := Lookup(ip)
+					require.NoError(t, err)
+
+					assert.NotEmpty(t, w.Country())
+
+				})
+			}
+		}()
+	}
+
 	f, err := os.Open("./data/ips.txt")
 	require.NoError(t, err)
 
-	var i int
 	rd := bufio.NewReader(f)
 	for {
 		line, err := rd.ReadString('\n')
@@ -37,30 +55,9 @@ func TestLookupFromFile(t *testing.T) {
 		}
 		require.NoError(t, err)
 
-		i++
-		// n := 7
-		// if i < n || i > n {
-		// 	continue
-		// }
-
-		line = strings.TrimSpace(line)
-
-		t.Run(line, func(t *testing.T) {
-			result, err := Lookup(line)
-			require.NoError(t, err)
-
-			w, err := parseWhois(result)
-			require.NoError(t, err)
-
-			assert.NotEmpty(t, w.Country())
-
-			// fmt.Println(line)
-			// fmt.Println("Country", w.Country())
-			// fmt.Println("Refer", w.Refer())
-			// fmt.Println("Registry", w.Registry())
-			// fmt.Println("-------")
-
-		})
-
+		ips <- strings.TrimSpace(line)
 	}
+
+	close(ips)
+	wg.Wait()
 }

@@ -49,7 +49,7 @@ func indexHandler(sc *storage.Client, bucket string, p *bluemonday.Policy) func(
 		ua := r.UserAgent()
 		country := r.Header.Get("X-Appengine-Country")
 
-		_, err := fmt.Fprintf(w, "hello my friend %s from %s :)", ua, country)
+		_, err := fmt.Fprintf(w, `<html><body><a href="/secret-link"></a><a href="/not-so-secret-link">link</a><p>hello my friend %s from %s :)</p><hr>`, ua, country)
 		if err != nil {
 			log.Println("err:", err)
 			return
@@ -105,10 +105,8 @@ func indexHandler(sc *storage.Client, bucket string, p *bluemonday.Policy) func(
 						continue
 					}
 
-					_, err = fmt.Fprintf(w, p.Sanitize(fmt.Sprintf("\nsay hello to my old firend %v that visited at %v :)",
-						data["ua"],
-						data["timestamp"],
-					)))
+					pline := fmt.Sprintf("say hello to my old firend %v that visited at %v :)", data["ua"], data["timestamp"])
+					_, err = fmt.Fprintf(w, "<p>%s</p>", p.Sanitize(pline))
 
 					if err != nil {
 						log.Println("err:", err)
@@ -116,6 +114,12 @@ func indexHandler(sc *storage.Client, bucket string, p *bluemonday.Policy) func(
 					}
 				}
 			}
+		}
+
+		_, err = fmt.Fprintf(w, "</body></html>")
+		if err != nil {
+			log.Println("err:", err)
+			return
 		}
 
 		err = json.NewEncoder(sw).Encode(map[string]interface{}{

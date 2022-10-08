@@ -1,57 +1,58 @@
 package whois
 
 import (
+	"fmt"
 	"io"
 	"log"
 	"net"
+	"os"
+	"path"
 	"strings"
 	"time"
 )
 
-func Lookup(param string) (result string, err error) {
+func Lookup(param string) (result *Whois, err error) {
 	addr := "whois.iana.org"
-	result, err = rawQuery(addr, param)
+
+	rr, err := rawQuery(addr, param)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
-	// fmt.Println("result", result)
-
-	whois, err := parseWhois(result)
+	whois, err := parseWhois(rr)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
-
-	// data, err := json.Marshal(whois)
-	// fmt.Println("data", string(data))
-	// fmt.Println("err", err)
 
 	if whois.Refer() == "" {
 		return
 	}
 
-	result, err = rawQuery(whois.Refer(), param)
+	rr, err = rawQuery(whois.Refer(), param)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
-	// fmt.Println("result", result)
-
-	whois, err = parseWhois(result)
+	whois, err = parseWhois(rr)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
-
-	_ = whois
 
 	// data, err := json.Marshal(whois)
 	// fmt.Println("data", string(data))
 	// fmt.Println("err", err)
 
-	return
+	return &whois, nil
 }
 
 func rawQuery(addr, param string) (result string, err error) {
+	result, err = getFromCache(addr, param)
+	if err == nil {
+		log.Print("hit", addr, param)
+	} else {
+		log.Print("miss", addr, param, err)
+	}
+
 	conn, err := net.Dial("tcp", addr+":43")
 	if err != nil {
 		return "", err
@@ -83,6 +84,47 @@ func rawQuery(addr, param string) (result string, err error) {
 		}
 
 		result += string(data[:n])
+	}
+
+	err = writeToCache(addr, param, result)
+	if err != nil {
+		log.Print(err)
+	}
+
+	return
+}
+
+func getFromCache(addr, param string) (result string, err error) {
+	cacheFile := path.Join("/Users/waltton/projects/echopast/cache", fmt.Sprintf("%s-%s", param, addr))
+	f, err := os.Open(cacheFile)
+	if err != nil {
+		return "", err
+	}
+
+	data, err := io.ReadAll(f)
+	if err != nil {
+		return "", err
+	}
+
+	return string(data), nil
+}
+
+func writeToCache(addr, param, result string) (err error) {
+	cacheFile := path.Join("/Users/waltton/projects/echopast/cache", fmt.Sprintf("%s-%s", param, addr))
+
+	f, err := os.Create(cacheFile)
+	if err != nil {
+		return err
+	}
+
+	_, err = fmt.Fprint(f, result)
+	if err != nil {
+		return err
+	}
+
+	err = f.Close()
+	if err != nil {
+		return err
 	}
 
 	return
