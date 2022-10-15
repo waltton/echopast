@@ -14,12 +14,12 @@ const qInsert = `
 	ON CONFLICT DO NOTHING
 `
 
-func writeLogs(db *sql.DB, logs []Log) error {
+func writeLogs(db *sql.DB, logs []Log) (n int, err error) {
 	args := []interface{}{}
 	for _, l := range logs {
 		headers, err := json.Marshal(l.Request.Headers)
 		if err != nil {
-			return err
+			return n, err
 		}
 
 		var ip *string
@@ -43,22 +43,47 @@ func writeLogs(db *sql.DB, logs []Log) error {
 			headers,
 			l.Request.Body,
 		)
+
+		if len(args) > 50000 {
+			q := fmt.Sprintf(qInsert, buildParams(13, len(args)))
+
+			r, err := db.Exec(q, args...)
+			if err != nil {
+				return n, err
+			}
+
+			ra, err := r.RowsAffected()
+			if err != nil {
+				return n, err
+			}
+
+			n += int(ra)
+
+			args = []interface{}{}
+		}
 	}
 
-	q := fmt.Sprintf(qInsert, buildParams(13, len(logs)))
+	q := fmt.Sprintf(qInsert, buildParams(13, len(args)))
 
-	_, err := db.Exec(q, args...)
+	r, err := db.Exec(q, args...)
 	if err != nil {
-		return err
+		return n, err
 	}
 
-	return nil
+	ra, err := r.RowsAffected()
+	if err != nil {
+		return n, err
+	}
+
+	n += int(ra)
+
+	return n, nil
 }
 
-func buildParams(cols, rows int) (params string) {
+func buildParams(cols, args int) (params string) {
 	var sb strings.Builder
 
-	for i := 1; i <= rows; i++ {
+	for i := 1; i <= args/cols; i++ {
 		if i > 1 {
 			sb.WriteString(",")
 		}

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>This Is What I Found Running A Honeypot</title>
+</head>
+<body>
+    <h1>This Is What I Found Running A Honeypot</h1>
+    <p>
+        The goal of this website is to display some statistics about the data that I have been collecting with my honepots.
+    </p>
+    <p>
+        I have a few different instances running, at the moment I sharing info from a simple webserver running on public cloud.
+    </p>
+    <div>
+        <p>
+
+        </p>
+    </div>
+    <div>
+        <p>
+            Where are the requests going to?
+            <ul>
+                <li>1 - To the IP address via http</li>
+                <li>2 - To the IP address via https</li>
+                <li>3 - To the domain via http</li>
+                <li>4 - To the domain via https</li>
+                <li>5 - To the IP address with a different hostname via http</li>
+                <li>6 - To the IP address with a different hostname via https</li>
+            </ul>
+        </p>
+        <canvas id="myChart" style="max-height: 500px;"></canvas>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script>
+        let data = [{"date" : "2022-10-14", "data" : {"1" : 79, "2" : 48, "3" : 0, "4" : 0, "5" : 1, "6" : 0}}, {"date" : "2022-10-13", "data" : {"1" : 159, "2" : 70, "3" : 0, "4" : 6, "5" : 2, "6" : 12}}, {"date" : "2022-10-12", "data" : {"1" : 377, "2" : 69, "3" : 0, "4" : 11, "5" : 1, "6" : 1}}, {"date" : "2022-10-11", "data" : {"1" : 150, "2" : 81, "3" : 0, "4" : 10, "5" : 2, "6" : 1}}, {"date" : "2022-10-10", "data" : {"1" : 134, "2" : 95, "3" : 0, "4" : 7, "5" : 4, "6" : 14}}, {"date" : "2022-10-09", "data" : {"1" : 107, "2" : 69, "3" : 0, "4" : 21, "5" : 3, "6" : 2}}, {"date" : "2022-10-08", "data" : {"1" : 120, "2" : 75, "3" : 0, "4" : 5, "5" : 1, "6" : 6}}, {"date" : "2022-10-07", "data" : {"1" : 165, "2" : 89, "3" : 0, "4" : 11, "5" : 0, "6" : 0}}, {"date" : "2022-10-06", "data" : {"1" : 159, "2" : 77, "3" : 0, "4" : 14, "5" : 0, "6" : 0}}, {"date" : "2022-10-05", "data" : {"1" : 1206, "2" : 82, "3" : 0, "4" : 6, "5" : 6, "6" : 1}}, {"date" : "2022-10-04", "data" : {"1" : 106, "2" : 65, "3" : 0, "4" : 5, "5" : 3, "6" : 0}}, {"date" : "2022-10-03", "data" : {"1" : 150, "2" : 59, "3" : 0, "4" : 14, "5" : 5, "6" : 4}}, {"date" : "2022-10-02", "data" : {"1" : 72, "2" : 37, "3" : 0, "4" : 0, "5" : 1, "6" : 0}}, {"date" : "2022-10-01", "data" : {"1" : 101, "2" : 84, "3" : 0, "4" : 3, "5" : 1, "6" : 8}}, {"date" : "2022-09-30", "data" : {"1" : 99, "2" : 57, "3" : 0, "4" : 14, "5" : 7, "6" : 0}}, {"date" : "2022-09-29", "data" : {"1" : 129, "2" : 52, "3" : 0, "4" : 2, "5" : 5, "6" : 3}}, {"date" : "2022-09-28", "data" : {"1" : 116, "2" : 111, "3" : 0, "4" : 2, "5" : 1, "6" : 29}}, {"date" : "2022-09-27", "data" : {"1" : 127, "2" : 40, "3" : 0, "4" : 3, "5" : 15, "6" : 1}}, {"date" : "2022-09-26", "data" : {"1" : 162, "2" : 62, "3" : 0, "4" : 5, "5" : 1, "6" : 0}}, {"date" : "2022-09-25", "data" : {"1" : 187, "2" : 46, "3" : 0, "4" : 9, "5" : 2, "6" : 3}}, {"date" : "2022-09-24", "data" : {"1" : 196, "2" : 76, "3" : 0, "4" : 10, "5" : 6, "6" : 22}}, {"date" : "2022-09-23", "data" : {"1" : 57, "2" : 37, "3" : 0, "4" : 9, "5" : 2, "6" : 1}}, {"date" : "2022-09-22", "data" : {"1" : 0, "2" : 51, "3" : 0, "4" : 6, "5" : 0, "6" : 3}}, {"date" : "2022-09-21", "data" : {"1" : 0, "2" : 45, "3" : 0, "4" : 6, "5" : 0, "6" : 0}}, {"date" : "2022-09-20", "data" : {"1" : 0, "2" : 45, "3" : 0, "4" : 10, "5" : 0, "6" : 0}}, {"date" : "2022-09-19", "data" : {"1" : 0, "2" : 64, "3" : 0, "4" : 26, "5" : 0, "6" : 5}}, {"date" : "2022-09-18", "data" : {"1" : 0, "2" : 46, "3" : 0, "4" : 71, "5" : 0, "6" : 0}}, {"date" : "2022-09-17", "data" : {"1" : 0, "2" : 35, "3" : 0, "4" : 9, "5" : 0, "6" : 0}}, {"date" : "2022-09-16", "data" : {"1" : 0, "2" : 39, "3" : 0, "4" : 13, "5" : 0, "6" : 0}}, {"date" : "2022-09-15", "data" : {"1" : 0, "2" : 30, "3" : 0, "4" : 9, "5" : 0, "6" : 0}}]
+
+        data = data.sort(x => x.date).reverse()
+
+        const config = {
+            type: 'line',
+            data: {
+                // labels: labels,
+                datasets: [{
+                    label: '1',
+                    data: data.map(x => ({x: x.date, y: x.data["1"]})),
+                    borderColor: "#004c6d",
+                    backgroundColor: "#004c6d",
+                },{
+                    label: '2',
+                    data: data.map(x => ({x: x.date, y: x.data["2"]})),
+                    borderColor: "#346888",
+                    backgroundColor: "#346888",
+                },{
+                    label: '3',
+                    data: data.map(x => ({x: x.date, y: x.data["3"]})),
+                    borderColor: "#5886a5",
+                    backgroundColor: "#5886a5",
+                },{
+                    label: '4',
+                    data: data.map(x => ({x: x.date, y: x.data["4"]})),
+                    borderColor: "#7aa6c2",
+                    backgroundColor: "#7aa6c2",
+                },{
+                    label: '5',
+                    data: data.map(x => ({x: x.date, y: x.data["5"]})),
+                    borderColor: "#9dc6e0",
+                    backgroundColor: "#9dc6e0",
+                },{
+                    label: '6',
+                    data: data.map(x => ({x: x.date, y: x.data["6"]})),
+                    borderColor: "#c1e7ff",
+                    backgroundColor: "#c1e7ff",
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                }
+            },
+        };
+
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const myChart = new Chart(ctx, config);
+        </script>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-D0192WFG4S"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-D0192WFG4S');
+        </script>
+</body>
+</html>

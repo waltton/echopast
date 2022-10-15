@@ -21,9 +21,17 @@ func main() {
 		log.Println(http.ListenAndServe("localhost:6060", nil))
 	}()
 
-	dataPath := "../data"
+	conn := os.Getenv("DB_CONN")
+	if conn == "" {
+		conn = "host=localhost database=logs user=postgres sslmode=disable"
+	}
 
-	db, err := sql.Open("postgres", "host=localhost database=logs user=postgres sslmode=disable")
+	dataFolder := os.Getenv("DATA_FOLDER")
+	if conn == "" {
+		dataFolder = "../data"
+	}
+
+	db, err := sql.Open("postgres", conn)
 	if err != nil {
 		log.Panic(err)
 	}
@@ -33,7 +41,7 @@ func main() {
 		log.Panic(err)
 	}
 
-	files, err := os.ReadDir(dataPath)
+	files, err := os.ReadDir(dataFolder)
 	if err != nil {
 		log.Panic(err)
 	}
@@ -45,7 +53,7 @@ func main() {
 			continue
 		}
 
-		l, err := parseFile(path.Join(dataPath, entry.Name()))
+		l, err := parseFile(path.Join(dataFolder, entry.Name()))
 		if err != nil {
 			log.Panic(err)
 		}
@@ -53,8 +61,10 @@ func main() {
 		logs = append(logs, l...)
 	}
 
-	err = writeLogs(db, logs)
+	n, err := writeLogs(db, logs)
 	if err != nil {
 		log.Panic(err)
 	}
+
+	log.Printf("%d new records added\n", n)
 }
