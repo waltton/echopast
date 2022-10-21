@@ -1,0 +1,2 @@
+aws s3 cp index.html  s3://this-is-what-i-found-running-a-honeypot.com/index.html --acl public-read
+ssh -i ~/projects/keys/waltton.m-aws-key.pem ec2-user@100.110.155.100 -p 2020 '/opt/whatifound/update.sh 2>&1 | tee -a /opt/whatifound/update.logs'

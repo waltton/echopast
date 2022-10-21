@@ -12,7 +12,10 @@
         The goal of this website is to display some statistics about the data that I have been collecting with my honepots.
     </p>
     <p>
-        I have a few different instances running, at the moment I sharing info from a simple webserver running on public cloud.
+        I have a few different instances running, at the moment I'm sharing info from a simple webserver running on public cloud.
+    </p>
+    <p>
+        DM me on twitter via @thishoneypot
     </p>
     <div>
         <p>
@@ -31,46 +34,58 @@
                 <li>6 - To the IP address with a different hostname via https</li>
             </ul>
         </p>
-        <canvas id="myChart" style="max-height: 500px;"></canvas>
+        <canvas id="data1Chart" style="max-height: 500px;"></canvas>
+    </div>
+    <div>
+        <p>
+            What clients are making requests?
+        </p>
+        <table id="data2table">
+            <tr>
+                <th>Current Week Rank</th>
+                <th>User Agent Group</th>
+                <th>Request Count Current Week</th>
+            </tr>
+        </table>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
     <script>
-        let data = [{"date" : "2022-10-14", "data" : {"1" : 79, "2" : 48, "3" : 0, "4" : 0, "5" : 1, "6" : 0}}, {"date" : "2022-10-13", "data" : {"1" : 159, "2" : 70, "3" : 0, "4" : 6, "5" : 2, "6" : 12}}, {"date" : "2022-10-12", "data" : {"1" : 377, "2" : 69, "3" : 0, "4" : 11, "5" : 1, "6" : 1}}, {"date" : "2022-10-11", "data" : {"1" : 150, "2" : 81, "3" : 0, "4" : 10, "5" : 2, "6" : 1}}, {"date" : "2022-10-10", "data" : {"1" : 134, "2" : 95, "3" : 0, "4" : 7, "5" : 4, "6" : 14}}, {"date" : "2022-10-09", "data" : {"1" : 107, "2" : 69, "3" : 0, "4" : 21, "5" : 3, "6" : 2}}, {"date" : "2022-10-08", "data" : {"1" : 120, "2" : 75, "3" : 0, "4" : 5, "5" : 1, "6" : 6}}, {"date" : "2022-10-07", "data" : {"1" : 165, "2" : 89, "3" : 0, "4" : 11, "5" : 0, "6" : 0}}, {"date" : "2022-10-06", "data" : {"1" : 159, "2" : 77, "3" : 0, "4" : 14, "5" : 0, "6" : 0}}, {"date" : "2022-10-05", "data" : {"1" : 1206, "2" : 82, "3" : 0, "4" : 6, "5" : 6, "6" : 1}}, {"date" : "2022-10-04", "data" : {"1" : 106, "2" : 65, "3" : 0, "4" : 5, "5" : 3, "6" : 0}}, {"date" : "2022-10-03", "data" : {"1" : 150, "2" : 59, "3" : 0, "4" : 14, "5" : 5, "6" : 4}}, {"date" : "2022-10-02", "data" : {"1" : 72, "2" : 37, "3" : 0, "4" : 0, "5" : 1, "6" : 0}}, {"date" : "2022-10-01", "data" : {"1" : 101, "2" : 84, "3" : 0, "4" : 3, "5" : 1, "6" : 8}}, {"date" : "2022-09-30", "data" : {"1" : 99, "2" : 57, "3" : 0, "4" : 14, "5" : 7, "6" : 0}}, {"date" : "2022-09-29", "data" : {"1" : 129, "2" : 52, "3" : 0, "4" : 2, "5" : 5, "6" : 3}}, {"date" : "2022-09-28", "data" : {"1" : 116, "2" : 111, "3" : 0, "4" : 2, "5" : 1, "6" : 29}}, {"date" : "2022-09-27", "data" : {"1" : 127, "2" : 40, "3" : 0, "4" : 3, "5" : 15, "6" : 1}}, {"date" : "2022-09-26", "data" : {"1" : 162, "2" : 62, "3" : 0, "4" : 5, "5" : 1, "6" : 0}}, {"date" : "2022-09-25", "data" : {"1" : 187, "2" : 46, "3" : 0, "4" : 9, "5" : 2, "6" : 3}}, {"date" : "2022-09-24", "data" : {"1" : 196, "2" : 76, "3" : 0, "4" : 10, "5" : 6, "6" : 22}}, {"date" : "2022-09-23", "data" : {"1" : 57, "2" : 37, "3" : 0, "4" : 9, "5" : 2, "6" : 1}}, {"date" : "2022-09-22", "data" : {"1" : 0, "2" : 51, "3" : 0, "4" : 6, "5" : 0, "6" : 3}}, {"date" : "2022-09-21", "data" : {"1" : 0, "2" : 45, "3" : 0, "4" : 6, "5" : 0, "6" : 0}}, {"date" : "2022-09-20", "data" : {"1" : 0, "2" : 45, "3" : 0, "4" : 10, "5" : 0, "6" : 0}}, {"date" : "2022-09-19", "data" : {"1" : 0, "2" : 64, "3" : 0, "4" : 26, "5" : 0, "6" : 5}}, {"date" : "2022-09-18", "data" : {"1" : 0, "2" : 46, "3" : 0, "4" : 71, "5" : 0, "6" : 0}}, {"date" : "2022-09-17", "data" : {"1" : 0, "2" : 35, "3" : 0, "4" : 9, "5" : 0, "6" : 0}}, {"date" : "2022-09-16", "data" : {"1" : 0, "2" : 39, "3" : 0, "4" : 13, "5" : 0, "6" : 0}}, {"date" : "2022-09-15", "data" : {"1" : 0, "2" : 30, "3" : 0, "4" : 9, "5" : 0, "6" : 0}}]
+        let data1 = [{"date" : "2022-10-14", "data" : {"1" : 79, "2" : 48, "3" : 0, "4" : 0, "5" : 1, "6" : 0}}, {"date" : "2022-10-13", "data" : {"1" : 159, "2" : 70, "3" : 0, "4" : 6, "5" : 2, "6" : 12}}, {"date" : "2022-10-12", "data" : {"1" : 377, "2" : 69, "3" : 0, "4" : 11, "5" : 1, "6" : 1}}, {"date" : "2022-10-11", "data" : {"1" : 150, "2" : 81, "3" : 0, "4" : 10, "5" : 2, "6" : 1}}, {"date" : "2022-10-10", "data" : {"1" : 134, "2" : 95, "3" : 0, "4" : 7, "5" : 4, "6" : 14}}, {"date" : "2022-10-09", "data" : {"1" : 107, "2" : 69, "3" : 0, "4" : 21, "5" : 3, "6" : 2}}, {"date" : "2022-10-08", "data" : {"1" : 120, "2" : 75, "3" : 0, "4" : 5, "5" : 1, "6" : 6}}, {"date" : "2022-10-07", "data" : {"1" : 165, "2" : 89, "3" : 0, "4" : 11, "5" : 0, "6" : 0}}, {"date" : "2022-10-06", "data" : {"1" : 159, "2" : 77, "3" : 0, "4" : 14, "5" : 0, "6" : 0}}, {"date" : "2022-10-05", "data" : {"1" : 1206, "2" : 82, "3" : 0, "4" : 6, "5" : 6, "6" : 1}}, {"date" : "2022-10-04", "data" : {"1" : 106, "2" : 65, "3" : 0, "4" : 5, "5" : 3, "6" : 0}}, {"date" : "2022-10-03", "data" : {"1" : 150, "2" : 59, "3" : 0, "4" : 14, "5" : 5, "6" : 4}}, {"date" : "2022-10-02", "data" : {"1" : 72, "2" : 37, "3" : 0, "4" : 0, "5" : 1, "6" : 0}}, {"date" : "2022-10-01", "data" : {"1" : 101, "2" : 84, "3" : 0, "4" : 3, "5" : 1, "6" : 8}}, {"date" : "2022-09-30", "data" : {"1" : 99, "2" : 57, "3" : 0, "4" : 14, "5" : 7, "6" : 0}}, {"date" : "2022-09-29", "data" : {"1" : 129, "2" : 52, "3" : 0, "4" : 2, "5" : 5, "6" : 3}}, {"date" : "2022-09-28", "data" : {"1" : 116, "2" : 111, "3" : 0, "4" : 2, "5" : 1, "6" : 29}}, {"date" : "2022-09-27", "data" : {"1" : 127, "2" : 40, "3" : 0, "4" : 3, "5" : 15, "6" : 1}}, {"date" : "2022-09-26", "data" : {"1" : 162, "2" : 62, "3" : 0, "4" : 5, "5" : 1, "6" : 0}}, {"date" : "2022-09-25", "data" : {"1" : 187, "2" : 46, "3" : 0, "4" : 9, "5" : 2, "6" : 3}}, {"date" : "2022-09-24", "data" : {"1" : 196, "2" : 76, "3" : 0, "4" : 10, "5" : 6, "6" : 22}}, {"date" : "2022-09-23", "data" : {"1" : 57, "2" : 37, "3" : 0, "4" : 9, "5" : 2, "6" : 1}}, {"date" : "2022-09-22", "data" : {"1" : 0, "2" : 51, "3" : 0, "4" : 6, "5" : 0, "6" : 3}}, {"date" : "2022-09-21", "data" : {"1" : 0, "2" : 45, "3" : 0, "4" : 6, "5" : 0, "6" : 0}}, {"date" : "2022-09-20", "data" : {"1" : 0, "2" : 45, "3" : 0, "4" : 10, "5" : 0, "6" : 0}}, {"date" : "2022-09-19", "data" : {"1" : 0, "2" : 64, "3" : 0, "4" : 26, "5" : 0, "6" : 5}}, {"date" : "2022-09-18", "data" : {"1" : 0, "2" : 46, "3" : 0, "4" : 71, "5" : 0, "6" : 0}}, {"date" : "2022-09-17", "data" : {"1" : 0, "2" : 35, "3" : 0, "4" : 9, "5" : 0, "6" : 0}}, {"date" : "2022-09-16", "data" : {"1" : 0, "2" : 39, "3" : 0, "4" : 13, "5" : 0, "6" : 0}}, {"date" : "2022-09-15", "data" : {"1" : 0, "2" : 30, "3" : 0, "4" : 9, "5" : 0, "6" : 0}}]
+        let data2 = [{"user_agent_group" : "Chrome", "count_current_week" : 165, "count_last_week" : 991, "rank_current_week" : 1, "rank_last_week" : 1, "delta" : 0}, {"user_agent_group" : "Safari", "count_current_week" : 41, "count_last_week" : 213, "rank_current_week" : 2, "rank_last_week" : 2, "delta" : 0}, {"user_agent_group" : "Firefox", "count_current_week" : 40, "count_last_week" : 173, "rank_current_week" : 3, "rank_last_week" : 3, "delta" : 0}, {"user_agent_group" : "Python requests", "count_current_week" : 22, "count_last_week" : 19, "rank_current_week" : 4, "rank_last_week" : 11, "delta" : 7}, {"user_agent_group" : "", "count_current_week" : 22, "count_last_week" : 88, "rank_current_week" : 4, "rank_last_week" : 5, "delta" : 1}, {"user_agent_group" : "zgrab", "count_current_week" : 18, "count_last_week" : 129, "rank_current_week" : 6, "rank_last_week" : 4, "delta" : -2}, {"user_agent_group" : "Go http client", "count_current_week" : 12, "count_last_week" : 28, "rank_current_week" : 7, "rank_last_week" : 9, "delta" : 2}, {"user_agent_group" : "CensysInspect", "count_current_week" : 11, "count_last_week" : 52, "rank_current_week" : 8, "rank_last_week" : 6, "delta" : -2}, {"user_agent_group" : "Hello World", "count_current_week" : 10, "count_last_week" : 44, "rank_current_week" : 9, "rank_last_week" : 7, "delta" : -2}, {"user_agent_group" : "Cloud mapping experiment", "count_current_week" : 10, "count_last_week" : null, "rank_current_week" : 9, "rank_last_week" : 45, "delta" : 36}, {"user_agent_group" : "Expanse", "count_current_week" : 6, "count_last_week" : 28, "rank_current_week" : 11, "rank_last_week" : 9, "delta" : -2}, {"user_agent_group" : "InternetMeasurement", "count_current_week" : 2, "count_last_week" : 4, "rank_current_week" : 12, "rank_last_week" : 17, "delta" : 5}, {"user_agent_group" : "Python urllib", "count_current_week" : 2, "count_last_week" : 32, "rank_current_week" : 12, "rank_last_week" : 8, "delta" : -4}, {"user_agent_group" : "'Mozilla/5.0", "count_current_week" : 2, "count_last_week" : 2, "rank_current_week" : 12, "rank_last_week" : 22, "delta" : 10}, {"user_agent_group" : "Linux Gnu (cow)", "count_current_week" : 2, "count_last_week" : 10, "rank_current_week" : 12, "rank_last_week" : 12, "delta" : 0}]
 
-        data = data.sort(x => x.date).reverse()
+        data1 = data1.sort(x => x.date).reverse()
 
         const config = {
             type: 'line',
             data: {
-                // labels: labels,
                 datasets: [{
                     label: '1',
-                    data: data.map(x => ({x: x.date, y: x.data["1"]})),
+                    data: data1.map(x => ({x: x.date, y: x.data["1"]})),
                     borderColor: "#004c6d",
                     backgroundColor: "#004c6d",
                 },{
                     label: '2',
-                    data: data.map(x => ({x: x.date, y: x.data["2"]})),
+                    data: data1.map(x => ({x: x.date, y: x.data["2"]})),
                     borderColor: "#346888",
                     backgroundColor: "#346888",
                 },{
                     label: '3',
-                    data: data.map(x => ({x: x.date, y: x.data["3"]})),
+                    data: data1.map(x => ({x: x.date, y: x.data["3"]})),
                     borderColor: "#5886a5",
                     backgroundColor: "#5886a5",
                 },{
                     label: '4',
-                    data: data.map(x => ({x: x.date, y: x.data["4"]})),
+                    data: data1.map(x => ({x: x.date, y: x.data["4"]})),
                     borderColor: "#7aa6c2",
                     backgroundColor: "#7aa6c2",
                 },{
                     label: '5',
-                    data: data.map(x => ({x: x.date, y: x.data["5"]})),
+                    data: data1.map(x => ({x: x.date, y: x.data["5"]})),
                     borderColor: "#9dc6e0",
                     backgroundColor: "#9dc6e0",
                 },{
                     label: '6',
-                    data: data.map(x => ({x: x.date, y: x.data["6"]})),
+                    data: data1.map(x => ({x: x.date, y: x.data["6"]})),
                     borderColor: "#c1e7ff",
                     backgroundColor: "#c1e7ff",
                 }]
@@ -85,8 +100,16 @@
             },
         };
 
-        const ctx = document.getElementById('myChart').getContext('2d');
-        const myChart = new Chart(ctx, config);
+        const data1ctx = document.getElementById('data1Chart').getContext('2d');
+        const myChart = new Chart(data1ctx, config);
+
+        const data2table = document.getElementById('data2table');
+        data2.forEach(x => {
+            let row = data2table.insertRow();
+            row.insertCell().innerText = x.rank_current_week + " (" + (x.delta > 0 ? "+"  : "") + x.delta + ")";
+            row.insertCell().innerText = x.user_agent_group;
+            row.insertCell().innerText = x.count_current_week;
+        });
         </script>
         <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-D0192WFG4S"></script>
@@ -96,6 +119,14 @@
         gtag('js', new Date());
 
         gtag('config', 'G-D0192WFG4S');
-        </script>
+    </script>
+    <style>
+        table, th, td {
+            border: 1px solid;
+        }
+        table {
+            width: 100%;
+        }
+    </style>
 </body>
 </html>

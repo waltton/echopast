@@ -1,16 +1,9 @@
-\set http_ip_address '34.107.159.115'
-\set https_ip_address '34.111.236.80'
-\set domain 'averyrandomdomainname.com'
-
 -- \timing
 -- \x
 
--- SELECT COUNT(*), user_agent
--- FROM logs
--- GROUP BY user_agent
--- ORDER BY COUNT(*) DESC
--- LIMIT 10
-
+\set http_ip_address '34.107.159.115'
+\set https_ip_address '34.111.236.80'
+\set domain 'averyrandomdomainname.com'
 
 -- Where are the requests going to?
 -- 1 - To the IP address via http
