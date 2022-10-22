@@ -31,9 +31,8 @@ WITH base AS (
             WHEN user_agent ~ 'ZmEu' THEN 'ZmEu'
             WHEN user_agent ~ 'WhatWeb' THEN 'WhatWeb'
 
-            WHEN user_agent ~ 'python-requests' THEN 'Python requests'
-            WHEN user_agent ~ 'Python-urllib' THEN 'Python urllib'
-            WHEN user_agent ~ 'python-httpx' THEN 'Python httpx'
+
+            WHEN user_agent ~ '[Pp]ython(\-requests|\-urllib|\-httpx|.*aiohttp)' THEN 'Python (requests/urllib/httpx/aiohttp)'
 
             WHEN user_agent ~ 'Go-http-client' THEN 'Go http client'
             WHEN user_agent ~ 'quic-go' THEN 'Quic Go'
@@ -41,8 +40,10 @@ WITH base AS (
             WHEN user_agent ~ 'Apache-HttpClient.*Java.*' THEN 'Java Apache HttpClient'
 
             WHEN user_agent ~ 'libwww-perl' THEN 'libwww perl'
+
         END AS user_agent_client
         , user_agent
+        , COUNT(DISTINCT ip) as ips
         , COUNT(*) FILTER (WHERE protocol = 'http' AND host = :'http_ip_address') AS c1
         , COUNT(*) FILTER (WHERE protocol = 'https' AND host = :'https_ip_address') AS c2
         , COUNT(*) FILTER (WHERE protocol = 'http' AND host = :'domain') AS c3
@@ -57,29 +58,31 @@ WITH base AS (
     SELECT *
         , RANK() OVER (ORDER BY COALESCE(count_current_week, 0) DESC) AS rank_current_week
         , RANK() OVER (ORDER BY COALESCE(count_last_week, 0) DESC) AS rank_last_week
-        , RANK() OVER (ORDER BY COALESCE(count_last_week, 0) DESC) - RANK() OVER (ORDER BY COALESCE(count_current_week, 0) DESC) as delta
     FROM (
         SELECT coalesce(user_agent_client, user_agent) AS user_agent_group
-            , sum(count) FILTER (WHERE timestamp >= NOW()::DATE - '7 days'::interval ) as count_current_week
-            , sum(count) FILTER (WHERE timestamp >= NOW()::DATE - '14 days'::interval AND timestamp < NOW()::DATE - '7 days'::interval ) as count_last_week
+            , sum(count) FILTER (WHERE date_trunc('week', timestamp) = date_trunc('week', now()) ) as count_current_week
+            , sum(count) FILTER (WHERE date_trunc('week', timestamp) = date_trunc('week', now()) - '7 days'::interval ) as count_last_week
 
-            , SUM(c1) FILTER (WHERE timestamp >= NOW()::DATE - '7 days'::interval ) as c1_current_week
-            , SUM(c1) FILTER (WHERE timestamp >= NOW()::DATE - '14 days'::interval AND timestamp < NOW()::DATE - '7 days'::interval ) as c1_last_week
+            , AVG(ips) FILTER (WHERE date_trunc('week', timestamp) = date_trunc('week', now()) ) as ips_current_week
+            , AVG(ips) FILTER (WHERE date_trunc('week', timestamp) = date_trunc('week', now()) - '7 days'::interval ) as ips_last_week
 
-            , SUM(c2) FILTER (WHERE timestamp >= NOW()::DATE - '7 days'::interval ) as c2_current_week
-            , SUM(c2) FILTER (WHERE timestamp >= NOW()::DATE - '14 days'::interval AND timestamp < NOW()::DATE - '7 days'::interval ) as c2_last_week
+            , SUM(c1) FILTER (WHERE date_trunc('week', timestamp) = date_trunc('week', now()) ) as c1_current_week
+            , SUM(c1) FILTER (WHERE date_trunc('week', timestamp) = date_trunc('week', now()) - '7 days'::interval ) as c1_last_week
 
-            , SUM(c3) FILTER (WHERE timestamp >= NOW()::DATE - '7 days'::interval ) as c3_current_week
-            , SUM(c3) FILTER (WHERE timestamp >= NOW()::DATE - '14 days'::interval AND timestamp < NOW()::DATE - '7 days'::interval ) as c3_last_week
+            , SUM(c2) FILTER (WHERE date_trunc('week', timestamp) = date_trunc('week', now()) ) as c2_current_week
+            , SUM(c2) FILTER (WHERE date_trunc('week', timestamp) = date_trunc('week', now()) - '7 days'::interval ) as c2_last_week
 
-            , SUM(c4) FILTER (WHERE timestamp >= NOW()::DATE - '7 days'::interval ) as c4_current_week
-            , SUM(c4) FILTER (WHERE timestamp >= NOW()::DATE - '14 days'::interval AND timestamp < NOW()::DATE - '7 days'::interval ) as c4_last_week
+            , SUM(c3) FILTER (WHERE date_trunc('week', timestamp) = date_trunc('week', now()) ) as c3_current_week
+            , SUM(c3) FILTER (WHERE date_trunc('week', timestamp) = date_trunc('week', now()) - '7 days'::interval ) as c3_last_week
 
-            , SUM(c5) FILTER (WHERE timestamp >= NOW()::DATE - '7 days'::interval ) as c5_current_week
-            , SUM(c5) FILTER (WHERE timestamp >= NOW()::DATE - '14 days'::interval AND timestamp < NOW()::DATE - '7 days'::interval ) as c5_last_week
+            , SUM(c4) FILTER (WHERE date_trunc('week', timestamp) = date_trunc('week', now()) ) as c4_current_week
+            , SUM(c4) FILTER (WHERE date_trunc('week', timestamp) = date_trunc('week', now()) - '7 days'::interval ) as c4_last_week
 
-            , SUM(c6) FILTER (WHERE timestamp >= NOW()::DATE - '7 days'::interval ) as c6_current_week
-            , SUM(c6) FILTER (WHERE timestamp >= NOW()::DATE - '14 days'::interval AND timestamp < NOW()::DATE - '7 days'::interval ) as c6_last_week
+            , SUM(c5) FILTER (WHERE date_trunc('week', timestamp) = date_trunc('week', now()) ) as c5_current_week
+            , SUM(c5) FILTER (WHERE date_trunc('week', timestamp) = date_trunc('week', now()) - '7 days'::interval ) as c5_last_week
+
+            , SUM(c6) FILTER (WHERE date_trunc('week', timestamp) = date_trunc('week', now()) ) as c6_current_week
+            , SUM(c6) FILTER (WHERE date_trunc('week', timestamp) = date_trunc('week', now()) - '7 days'::interval ) as c6_last_week
 
         FROM base
         GROUP BY coalesce(user_agent_client, user_agent)
@@ -92,11 +95,13 @@ WITH base AS (
 SELECT json_agg(
         json_build_object(
             'user_agent_group', user_agent_group,
-            'count_current_week', count_current_week,
-            'count_last_week', count_last_week,
-            'rank_current_week', rank_current_week,
-            'rank_last_week', rank_last_week,
-            'delta', delta,
+            'count', count_current_week,
+            'count_delta', count_current_week - count_last_week,
+            'rank', rank_current_week,
+            'rank_delta', rank_current_week - rank_last_week,
+
+            'daily_ips_avg', ips_current_week,
+            'daily_ips_avg_delta', ips_current_week - ips_last_week,
 
             'c1', c1_current_week,
             -- 'c1_last_week', c1_last_week,
