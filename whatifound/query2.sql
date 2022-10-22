@@ -1,6 +1,10 @@
 -- \timing
 -- \x
 
+\set http_ip_address '34.107.159.115'
+\set https_ip_address '34.111.236.80'
+\set domain 'averyrandomdomainname.com'
+
 WITH base AS (
     SELECT COUNT(*)
         , CASE
@@ -39,6 +43,12 @@ WITH base AS (
             WHEN user_agent ~ 'libwww-perl' THEN 'libwww perl'
         END AS user_agent_client
         , user_agent
+        , COUNT(*) FILTER (WHERE protocol = 'http' AND host = :'http_ip_address') AS c1
+        , COUNT(*) FILTER (WHERE protocol = 'https' AND host = :'https_ip_address') AS c2
+        , COUNT(*) FILTER (WHERE protocol = 'http' AND host = :'domain') AS c3
+        , COUNT(*) FILTER (WHERE protocol = 'https' AND host = :'domain') AS c4
+        , COUNT(*) FILTER (WHERE protocol = 'http' AND NOT host = :'http_ip_address' AND NOT host = :'domain') AS c5
+        , COUNT(*) FILTER (WHERE protocol = 'https' AND NOT host = :'https_ip_address' AND NOT host = :'domain') AS c6
         , date_trunc('day', timestamp) as timestamp
     FROM logs
     GROUP BY date_trunc('day', timestamp), user_agent
@@ -52,6 +62,25 @@ WITH base AS (
         SELECT coalesce(user_agent_client, user_agent) AS user_agent_group
             , sum(count) FILTER (WHERE timestamp >= NOW()::DATE - '7 days'::interval ) as count_current_week
             , sum(count) FILTER (WHERE timestamp >= NOW()::DATE - '14 days'::interval AND timestamp < NOW()::DATE - '7 days'::interval ) as count_last_week
+
+            , SUM(c1) FILTER (WHERE timestamp >= NOW()::DATE - '7 days'::interval ) as c1_current_week
+            , SUM(c1) FILTER (WHERE timestamp >= NOW()::DATE - '14 days'::interval AND timestamp < NOW()::DATE - '7 days'::interval ) as c1_last_week
+
+            , SUM(c2) FILTER (WHERE timestamp >= NOW()::DATE - '7 days'::interval ) as c2_current_week
+            , SUM(c2) FILTER (WHERE timestamp >= NOW()::DATE - '14 days'::interval AND timestamp < NOW()::DATE - '7 days'::interval ) as c2_last_week
+
+            , SUM(c3) FILTER (WHERE timestamp >= NOW()::DATE - '7 days'::interval ) as c3_current_week
+            , SUM(c3) FILTER (WHERE timestamp >= NOW()::DATE - '14 days'::interval AND timestamp < NOW()::DATE - '7 days'::interval ) as c3_last_week
+
+            , SUM(c4) FILTER (WHERE timestamp >= NOW()::DATE - '7 days'::interval ) as c4_current_week
+            , SUM(c4) FILTER (WHERE timestamp >= NOW()::DATE - '14 days'::interval AND timestamp < NOW()::DATE - '7 days'::interval ) as c4_last_week
+
+            , SUM(c5) FILTER (WHERE timestamp >= NOW()::DATE - '7 days'::interval ) as c5_current_week
+            , SUM(c5) FILTER (WHERE timestamp >= NOW()::DATE - '14 days'::interval AND timestamp < NOW()::DATE - '7 days'::interval ) as c5_last_week
+
+            , SUM(c6) FILTER (WHERE timestamp >= NOW()::DATE - '7 days'::interval ) as c6_current_week
+            , SUM(c6) FILTER (WHERE timestamp >= NOW()::DATE - '14 days'::interval AND timestamp < NOW()::DATE - '7 days'::interval ) as c6_last_week
+
         FROM base
         GROUP BY coalesce(user_agent_client, user_agent)
         ORDER BY sum(count) desc
@@ -67,7 +96,20 @@ SELECT json_agg(
             'count_last_week', count_last_week,
             'rank_current_week', rank_current_week,
             'rank_last_week', rank_last_week,
-            'delta', delta
+            'delta', delta,
+
+            'c1', c1_current_week,
+            -- 'c1_last_week', c1_last_week,
+            'c2', c2_current_week,
+            -- 'c2_last_week', c2_last_week,
+            'c3', c3_current_week,
+            -- 'c3_last_week', c3_last_week,
+            'c4', c4_current_week,
+            -- 'c4_last_week', c4_last_week,
+            'c5', c5_current_week,
+            -- 'c5_last_week', c5_last_week,
+            'c6', c6_current_week
+            -- 'c6_last_week', c6_last_week
         )
         ORDER BY count_current_week DESC
     )
