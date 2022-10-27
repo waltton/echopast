@@ -88,7 +88,7 @@ WITH base AS (
         GROUP BY coalesce(user_agent_client, user_agent)
         ORDER BY sum(count) desc
     ) _
-    ORDER BY COALESCE(count_current_week, 0) DESC
+    ORDER BY COALESCE(count_current_week, 0) DESC, COALESCE(count_last_week, 0) DESC
     LIMIT 15
 )
 
@@ -96,27 +96,21 @@ SELECT json_agg(
         json_build_object(
             'user_agent_group', user_agent_group,
             'count', count_current_week,
-            'count_delta', count_current_week - count_last_week,
+            'count_delta', COALESCE(count_current_week, 0) - COALESCE(count_last_week, 0),
             'rank', rank_current_week,
-            'rank_delta', rank_current_week - rank_last_week,
+            'rank_delta', COALESCE(rank_current_week, 0) - COALESCE(rank_last_week, 0),
 
             'daily_ips_avg', ips_current_week,
-            'daily_ips_avg_delta', ips_current_week - ips_last_week,
+            'daily_ips_avg_delta', COALESCE(ips_current_week, 0) - COALESCE(ips_last_week, 0),
 
             'c1', c1_current_week,
-            -- 'c1_last_week', c1_last_week,
             'c2', c2_current_week,
-            -- 'c2_last_week', c2_last_week,
             'c3', c3_current_week,
-            -- 'c3_last_week', c3_last_week,
             'c4', c4_current_week,
-            -- 'c4_last_week', c4_last_week,
             'c5', c5_current_week,
-            -- 'c5_last_week', c5_last_week,
             'c6', c6_current_week
-            -- 'c6_last_week', c6_last_week
         )
         ORDER BY count_current_week DESC
     )
--- SELECT *
+-- SELECT user_agent_group, count_current_week, count_current_week
 FROM base2
