@@ -13,6 +13,7 @@ WITH base AS (
             WHEN user_agent ~ 'MSIE ([0-9]{1,}[\.0-9]{0,})' THEN 'Internet Explorer'
             WHEN user_agent ~ 'Firefox\/(\d+(?:\.\d+)+)' THEN 'Firefox'
             WHEN user_agent ~ 'Edge' THEN 'Edge'
+            WHEN user_agent ~ 'AppleWebKit' THEN 'WebKit'
 
 
             WHEN user_agent ~ 'Expanse, a Palo Alto' THEN 'Expanse'
