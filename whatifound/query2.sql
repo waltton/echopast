@@ -96,12 +96,12 @@ SELECT json_agg(
         json_build_object(
             'user_agent_group', user_agent_group,
             'count', count_current_week,
-            'count_delta', COALESCE(count_current_week, 0) - COALESCE(count_last_week, 0),
+            'count_delta', COALESCE(count_last_week, 0) - COALESCE(count_current_week, 0),
             'rank', rank_current_week,
-            'rank_delta', COALESCE(rank_current_week, 0) - COALESCE(rank_last_week, 0),
+            'rank_delta', COALESCE(rank_last_week, 0) - COALESCE(rank_current_week, 0),
 
             'daily_ips_avg', ips_current_week,
-            'daily_ips_avg_delta', COALESCE(ips_current_week, 0) - COALESCE(ips_last_week, 0),
+            'daily_ips_avg_delta', COALESCE(ips_last_week, 0) - COALESCE(ips_current_week, 0),
 
             'c1', c1_current_week,
             'c2', c2_current_week,
